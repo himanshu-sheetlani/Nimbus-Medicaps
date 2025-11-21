@@ -5,6 +5,7 @@ import Auth from "./pages/auth/page";
 import Board from "./pages/on-board/page";
 import Home from "./pages/home/page";
 import Models from "./pages/model/page";
+import NotFound from "./pages/404/page";
 
 // stores
 import { useAuthStore } from "./stores/useAuthStore";
@@ -84,6 +85,7 @@ const App = () => {
           }
         />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
