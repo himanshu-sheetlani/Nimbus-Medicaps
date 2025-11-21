@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import Land from "./pages/land/page";
 import Auth from "./pages/auth/page";
 import Board from "./pages/on-board/page";
+import Home from "./pages/home/page";
+import Models from "./pages/model/page";
 
 // stores
 import { useAuthStore } from "./stores/useAuthStore";
@@ -14,6 +16,8 @@ import {
   OnboardGuard,
   OnboardingRoute,
 } from "./components/guards/index";
+
+import Layout from "./components/layout/layout";
 
 import { Spinner } from "./components/ui/spinner";
 
@@ -48,7 +52,7 @@ const App = () => {
           </PublicRoute>
         }
       />
-       <Route
+      <Route
         path="/on-board"
         element={
           <OnboardingRoute>
@@ -56,6 +60,30 @@ const App = () => {
           </OnboardingRoute>
         }
       />
+      <Route
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
+        <Route
+          path="/home"
+          element={
+            <OnboardGuard>
+              <Home />
+            </OnboardGuard>
+          }
+        />
+        <Route
+          path="/3d-models"
+          element={
+            <OnboardGuard>
+              <Models />
+            </OnboardGuard>
+          }
+        />
+      </Route>
     </Routes>
   );
 };
