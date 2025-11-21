@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Font imports */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -116,5 +120,59 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Font utility classes */
+  .font-inter {
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, sans-serif;
+  }
+
+  .font-poppins {
+    font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, sans-serif;
+  }
+
+  /* Font weight utilities for better control */
+  .font-inter-light {
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+  }
+  .font-inter-regular {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+  }
+  .font-inter-medium {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+  }
+  .font-inter-semibold {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+  }
+  .font-inter-bold {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+  }
+
+  .font-poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+  }
+  .font-poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+  }
+  .font-poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+  }
+  .font-poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+  }
+  .font-poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
   }
 }
