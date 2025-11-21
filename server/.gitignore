@@ -185,3 +185,5 @@ docs/api/
 # Lock files (uncomment if you want to ignore them)
 # package-lock.json
 # yarn.lock
+src/constants
+src/seed

@@ -64,8 +64,10 @@ app.use(
 );
 
 import authRouter from "./routes/auth.route.js";
+import modelRouter from "./routes/model.route.js";
 
 app.use("/api/auth", authRouter);
+app.use("/api/3dmodel", modelRouter);
 
 // Routes
 app.get("/", (req, res) => {
