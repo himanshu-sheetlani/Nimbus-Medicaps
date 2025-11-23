@@ -5,6 +5,10 @@ import Auth from "./pages/auth/page";
 import Board from "./pages/on-board/page";
 import Home from "./pages/home/page";
 import Models from "./pages/model/page";
+import Trips from "./pages/trips/page";
+import TripDetail from "./pages/trips/routes/page";
+import Profile from "./pages/profile/page";
+import Setting from "./pages/settings/page";
 import NotFound from "./pages/404/page";
 
 // stores
@@ -81,6 +85,38 @@ const App = () => {
           element={
             <OnboardGuard>
               <Models />
+            </OnboardGuard>
+          }
+        />
+        <Route
+          path="/my-trips"
+          element={
+            <OnboardGuard>
+              <Trips />
+            </OnboardGuard>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <OnboardGuard>
+              <Profile />
+            </OnboardGuard>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <OnboardGuard>
+              <Setting />
+            </OnboardGuard>
+          }
+        />
+        <Route
+          path="/my-trips/:tripId"
+          element={
+            <OnboardGuard>
+              <TripDetail />
             </OnboardGuard>
           }
         />
