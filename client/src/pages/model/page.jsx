@@ -36,6 +36,9 @@ import {
   Eye,
   Box,
   MonitorSpeaker,
+  ExternalLink,
+  Star,
+  Building,
 } from "lucide-react";
 
 import SketchfabModalViewer from "./components/viewer";
@@ -59,16 +62,42 @@ export default function MonumentsDashboard() {
   };
 
   const handleArLinkClick = (arlink) => {
-    window.open(arlink, "_blank");
+    window.open(arlink, "_blank", "width=800,height=600,toolbar=no,menubar=no");
   };
 
-  const handleVrViewClick = (vrlink) => {
-    if (vrlink) {
-      window.open(vrlink, "_blank");
+  // Updated VR handler to use vrHTMLPath from database
+  const handleVrViewClick = (monument) => {
+    if (monument.vrHTMLPath) {
+      // Construct the VR URL using the path stored in database
+      const vrUrl = `/VR/${monument.vrHTMLPath}`;
+      
+      // Open VR experience in new window with VR-optimized settings
+      const vrWindow = window.open(
+        vrUrl, 
+        'vrExperience',
+        'width=1400,height=900,fullscreen=yes,toolbar=no,menubar=no,scrollbars=no,location=no,status=no'
+      );
+      
+      // Focus the VR window and attempt fullscreen
+      if (vrWindow) {
+        vrWindow.focus();
+        
+        // Try to trigger fullscreen after a short delay
+        setTimeout(() => {
+          if (vrWindow.document && vrWindow.document.documentElement.requestFullscreen) {
+            vrWindow.document.documentElement.requestFullscreen().catch(err => {
+              console.log('Fullscreen request failed:', err);
+            });
+          }
+        }, 1000);
+      }
     } else {
-      alert("VR experience will be available soon for this monument!");
+      // Show a more informative message for unavailable VR
+      alert(`🥽 VR experience for ${monument.name} is coming soon! We're working on creating an immersive virtual tour for this magnificent monument.`);
     }
   };
+
+  console.log(models);
 
   // Get unique values for filter options
   const locations = [...new Set(models.map((m) => m.location))];
@@ -113,10 +142,16 @@ export default function MonumentsDashboard() {
     );
   });
 
+  // Count VR-enabled monuments
+  const vrEnabledCount = models.filter(model => model.vrHTMLPath).length;
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black">
-        <Spinner className="text-purple-400" />
+        <div className="flex items-center space-x-3">
+          <Spinner className="text-purple-400" />
+          <span className="text-purple-100 font-inter-medium">Loading monuments...</span>
+        </div>
       </div>
     );
   }
@@ -132,8 +167,20 @@ export default function MonumentsDashboard() {
                 Monuments of India
               </h1>
               <p className="text-purple-300 font-inter-regular">
-                Explore India's heritage through immersive 3D and AR experiences
+                Explore India's heritage through immersive 3D, AR, and VR experiences
               </p>
+            </div>
+            
+            {/* Stats Badges */}
+            <div className="flex items-center gap-2">
+              <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50">
+                <Building className="h-3 w-3 mr-1" />
+                {models.length} Monuments
+              </Badge>
+              <Badge className="bg-pink-900/50 text-pink-300 border-pink-700/50">
+                <MonitorSpeaker className="h-3 w-3 mr-1" />
+                {vrEnabledCount} VR Ready
+              </Badge>
             </div>
           </div>
 
@@ -172,7 +219,7 @@ export default function MonumentsDashboard() {
                         key={location}
                         value={location}
                         className="text-purple-100"
-                        title={location} // Tooltip for full text
+                        title={location}
                       >
                         <span className="truncate">{location}</span>
                       </SelectItem>
@@ -202,7 +249,7 @@ export default function MonumentsDashboard() {
                         key={arch}
                         value={arch}
                         className="text-purple-100"
-                        title={arch} // Tooltip for full text
+                        title={arch}
                       >
                         <span className="truncate">{arch}</span>
                       </SelectItem>
@@ -232,7 +279,7 @@ export default function MonumentsDashboard() {
                         key={period}
                         value={period}
                         className="text-purple-100"
-                        title={period} // Tooltip for full text
+                        title={period}
                       >
                         <span className="truncate">{period}</span>
                       </SelectItem>
@@ -243,8 +290,26 @@ export default function MonumentsDashboard() {
             </div>
 
             {/* Results count */}
-            <div className="mt-4 text-purple-300 text-sm">
-              Showing {filteredModels.length} of {models.length} monuments
+            <div className="mt-4 flex justify-between items-center">
+              <span className="text-purple-300 text-sm">
+                Showing {filteredModels.length} of {models.length} monuments
+              </span>
+              
+              {/* Clear Filters Button */}
+              <Button
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedLocation("all");
+                  setSelectedArchitecture("all");
+                  setSelectedPeriod("all");
+                }}
+                variant="outline"
+                size="sm"
+                className="border-purple-700/50 text-purple-300 hover:bg-purple-950/30"
+              >
+                <Filter className="h-4 w-4 mr-2" />
+                Clear Filters
+              </Button>
             </div>
           </div>
 
@@ -255,20 +320,34 @@ export default function MonumentsDashboard() {
                 key={monument._id}
                 className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl p-4 hover:bg-purple-950/40 transition-all duration-300 group"
               >
-                {/* Monument Image */}
-                <div className="w-full h-48 bg-purple-900/50 rounded-lg mb-4 overflow-hidden">
+                {/* Monument Image with VR Badge */}
+                <div className="relative w-full h-48 bg-purple-900/50 rounded-lg mb-4 overflow-hidden">
                   <img
                     src={monument.imageUrl}
                     alt={monument.name}
                     className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                   />
+                  
+                  {/* VR Status Badge */}
+                  <div className="absolute top-3 right-3">
+                    {monument.vrHTMLPath ? (
+                      <Badge className="bg-pink-900/90 text-pink-200 border-pink-700/50 backdrop-blur-sm">
+                        <MonitorSpeaker className="h-3 w-3 mr-1" />
+                        VR Ready
+                      </Badge>
+                    ) : (
+                      <Badge className="bg-zinc-800/90 text-zinc-400 border-zinc-600/50 backdrop-blur-sm">
+                        VR Soon
+                      </Badge>
+                    )}
+                  </div>
                 </div>
 
                 {/* Monument Info */}
                 <div className="space-y-3">
                   <div>
                     <h3
-                      className="text-lg font-inter-semibold text-purple-100 mb-1 truncate"
+                      className="text-lg font-inter-semibold text-purple-100 mb-1 truncate group-hover:text-purple-50 transition-colors"
                       title={monument.name}
                     >
                       {monument.name}
@@ -322,12 +401,25 @@ export default function MonumentsDashboard() {
                         <Eye className="h-3 w-3 mr-1" />
                         AR View
                       </Button>
+                      
                       <Button
-                        onClick={() => handleVrViewClick(monument?.vrlink)}
-                        className="bg-pink-900/50 border border-pink-700/50 text-pink-300 hover:bg-pink-800/50 transition-all duration-200 font-inter-medium text-sm"
+                        onClick={() => handleVrViewClick(monument)}
+                        disabled={!monument.vrHTMLPath}
+                        className={`transition-all duration-200 font-inter-medium text-sm ${
+                          monument.vrHTMLPath
+                            ? 'bg-pink-900/50 border border-pink-700/50 text-pink-300 hover:bg-pink-800/50 hover:scale-105'
+                            : 'bg-zinc-800/50 border border-zinc-600/50 text-zinc-500 cursor-not-allowed'
+                        }`}
                       >
                         <MonitorSpeaker className="h-3 w-3 mr-1" />
-                        VR Tour
+                        {monument.vrHTMLPath ? (
+                          <>
+                            VR Tour
+                            <ExternalLink className="h-2 w-2 ml-1" />
+                          </>
+                        ) : (
+                          'VR Soon'
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -339,12 +431,14 @@ export default function MonumentsDashboard() {
           {/* No results message */}
           {filteredModels.length === 0 && (
             <div className="text-center py-12">
-              <div className="text-4xl mb-4">🔍</div>
+              <div className="w-16 h-16 bg-purple-900/50 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Search className="h-8 w-8 text-purple-300" />
+              </div>
               <h3 className="text-xl font-inter-semibold text-purple-100 mb-2">
                 No monuments found
               </h3>
               <p className="text-purple-300 font-inter-regular">
-                Try adjusting your search criteria or filters
+                Try adjusting your search criteria or clear filters to see all monuments
               </p>
             </div>
           )}
@@ -352,15 +446,22 @@ export default function MonumentsDashboard() {
           {/* Bottom CTA */}
           <div className="mt-12 p-6 bg-gradient-to-r from-purple-950/50 via-purple-900/30 to-purple-950/50 border border-purple-800/30 rounded-xl text-center">
             <h3 className="text-xl font-inter-semibold text-purple-100 mb-2">
-              Discover More Heritage Sites
+              Experience Heritage in Virtual Reality
             </h3>
             <p className="text-purple-300 font-inter-regular mb-4">
-              Explore India's rich cultural heritage through cutting-edge AR and
-              3D technology
+              Step into history with our immersive VR experiences. {vrEnabledCount} monuments now available in virtual reality!
             </p>
-            <Button className="bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-500 hover:to-purple-600 transition-all duration-200 font-inter-medium">
-              View All Monuments
-            </Button>
+            <div className="flex justify-center gap-2">
+              <Badge className="bg-pink-900/50 text-pink-300 border-pink-700/50">
+                🥽 VR Compatible
+              </Badge>
+              <Badge className="bg-blue-900/50 text-blue-300 border-blue-700/50">
+                📱 Mobile Friendly
+              </Badge>
+              <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50">
+                🎮 Interactive Tours
+              </Badge>
+            </div>
           </div>
         </Container>
       </Wrapper>
