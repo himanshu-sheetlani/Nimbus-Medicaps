@@ -11,6 +11,7 @@ const threeDModelSchema = new mongoose.Schema(
     imageUrl: { type: String, required: true },
     sketchfabUid: { type: String, required: true },
     arlink: { type: String, required: true },
+    vrHTMLPath : {type : String , required : true}
   },
   {
     timestamps: true,
