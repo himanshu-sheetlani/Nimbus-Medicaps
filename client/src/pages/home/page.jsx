@@ -28,13 +28,32 @@ import {
   Box,
   MonitorSpeaker,
   Users,
+  Loader2,
+  RefreshCw,
+  Sparkles,
+  MapPin as LocationIcon,
+  IndianRupee,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRecommendationStore } from "@/stores/useRecommendationStore";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  
+  // Recommendation store integration
+  const { 
+    recommendations, 
+    loading: recommendationsLoading, 
+    error: recommendationsError,
+    getRecommendations 
+  } = useRecommendationStore();
 
-  // Mock data - replace with actual API calls
+  // Fetch recommendations on component mount
+  useEffect(() => {
+    getRecommendations();
+  }, [getRecommendations]);
+
+  // Mock data for trips - replace with actual API calls
   const recentTrips = [
     {
       id: 1,
@@ -104,29 +123,160 @@ const Dashboard = () => {
     },
   ];
 
-  const aiSuggestions = [
-    {
-      title: "Bali, Indonesia",
-      reason: "Perfect weather in December",
-      confidence: 92,
-      image:
-        "https://plus.unsplash.com/premium_photo-1677829177642-30def98b0963?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmFsaXxlbnwwfHwwfHx8MA%3D%3D",
-    },
-    {
-      title: "Switzerland Alps",
-      reason: "Based on your mountain preferences",
-      confidence: 88,
-      image:
-        "https://plus.unsplash.com/premium_photo-1689084892324-fd8822cb97c1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3dpdHplcmxhbmQlMjBhbHBzfGVufDB8fDB8fHww",
-    },
-    {
-      title: "Iceland",
-      reason: "Aurora season starting",
-      confidence: 85,
-      image:
-        "https://images.unsplash.com/photo-1531168556467-80aace0d0144?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aWNlbGFuZHxlbnwwfHwwfHx8MA%3D%3D",
-    },
-  ];
+  // Handle recommendation refresh
+  const handleRefreshRecommendations = () => {
+    getRecommendations();
+  };
+
+  // Render AI Suggestions Section
+  const renderAISuggestions = () => {
+    if (recommendationsLoading) {
+      return (
+        <div className="space-y-4 mb-8">
+          {[1, 2, 3].map((index) => (
+            <div
+              key={index}
+              className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl p-4 animate-pulse"
+            >
+              <div className="w-full h-32 bg-purple-900/30 rounded-lg mb-4"></div>
+              <div className="h-4 bg-purple-900/30 rounded mb-2"></div>
+              <div className="h-3 bg-purple-900/20 rounded mb-3 w-3/4"></div>
+              <div className="flex items-center justify-between">
+                <div className="h-3 bg-green-900/30 rounded w-20"></div>
+                <div className="h-4 bg-purple-900/30 rounded w-4"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    if (recommendationsError) {
+      return (
+        <div className="bg-red-950/30 border border-red-800/30 rounded-xl p-6 text-center mb-8">
+          <div className="text-red-400 mb-2">⚠️</div>
+          <h3 className="text-red-300 font-inter-semibold mb-2">
+            Unable to load recommendations
+          </h3>
+          <p className="text-red-400 text-sm mb-4">
+            {recommendationsError}
+          </p>
+          <button
+            onClick={handleRefreshRecommendations}
+            className="px-4 py-2 bg-red-900/50 border border-red-700/50 text-red-300 rounded-lg text-sm hover:bg-red-800/50 transition-colors flex items-center gap-2 mx-auto"
+          >
+            <RefreshCw className="h-4 w-4" />
+            Try Again
+          </button>
+        </div>
+      );
+    }
+
+    if (!recommendations || recommendations.length === 0) {
+      return (
+        <div className="bg-purple-950/30 border border-purple-800/30 rounded-xl p-6 text-center mb-8">
+          <Sparkles className="h-8 w-8 text-purple-400 mx-auto mb-3" />
+          <h3 className="text-purple-100 font-inter-semibold mb-2">
+            No recommendations yet
+          </h3>
+          <p className="text-purple-300 text-sm mb-4">
+            Complete your profile to get personalized travel suggestions
+          </p>
+          <Link
+            to="/profile"
+            className="px-4 py-2 bg-purple-900/50 border border-purple-700/50 text-purple-300 rounded-lg text-sm hover:bg-purple-800/50 transition-colors inline-flex items-center gap-2"
+          >
+            <Settings className="h-4 w-4" />
+            Complete Profile
+          </Link>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-4 mb-8">
+        {recommendations.slice(0, 3).map((recommendation, index) => (
+          <div
+            key={recommendation.id || index}
+            className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl p-4 hover:bg-purple-950/50 transition-colors cursor-pointer group"
+          >
+            {/* Recommendation Image Placeholder */}
+            <div className="w-full h-32 bg-gradient-to-br from-purple-900/50 to-purple-700/30 rounded-lg mb-4 overflow-hidden flex items-center justify-center">
+              <div className="text-center">
+                <LocationIcon className="h-8 w-8 text-purple-300 mx-auto mb-2" />
+                <span className="text-purple-200 text-sm font-inter-medium">
+                  {recommendation.placeName}
+                </span>
+              </div>
+            </div>
+
+            {/* Recommendation Details */}
+            <h3 className="text-lg font-inter-semibold text-purple-100 mb-2">
+              {recommendation.placeName}
+            </h3>
+            <p className="text-purple-300 font-inter-regular text-sm mb-3 line-clamp-2">
+              {recommendation.description}
+            </p>
+
+            {/* Key Info */}
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-3 w-3 text-purple-400" />
+                <span className="text-purple-300 text-xs">
+                  Best time: {recommendation.bestTimeToVisit}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-3 w-3 text-purple-400" />
+                <span className="text-purple-300 text-xs">
+                  Duration: {recommendation.travelDuration}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <IndianRupee className="h-3 w-3 text-purple-400" />
+                <span className="text-purple-300 text-xs">
+                  Budget: {recommendation.estimatedBudget}
+                </span>
+              </div>
+            </div>
+
+            {/* Match Reasoning */}
+            {recommendation.fitReasoning && recommendation.fitReasoning.length > 0 && (
+              <div className="mb-4">
+                <div className="flex items-center gap-1 mb-2">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span className="text-green-300 font-inter-medium text-xs">
+                    Perfect match
+                  </span>
+                </div>
+                <ul className="space-y-1">
+                  {recommendation.fitReasoning.slice(0, 2).map((reason, idx) => (
+                    <li key={idx} className="text-purple-400 text-xs flex items-start gap-2">
+                      <span className="text-purple-500 mt-1">•</span>
+                      <span className="line-clamp-1">{reason}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Action Button */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-3 w-3 text-yellow-400" />
+                <span className="text-yellow-300 font-inter-medium text-xs">
+                  AI Recommended
+                </span>
+              </div>
+              <button className="text-purple-400 hover:text-purple-300 transition-colors">
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen w-full">
@@ -287,103 +437,45 @@ const Dashboard = () => {
                   Plan New Trip
                 </p>
               </div>
-
-              {/* <div className="w-full flex items-center justify-evenly mt-8">
-                <div className="bg-gradient-to-br from-purple-950/50 to-purple-900/30 border border-purple-800/30 rounded-xl p-6">
-                  <h3 className="text-lg font-inter-semibold text-purple-100 mb-4">
-                    Weather Update
-                  </h3>
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">☀️</div>
-                    <p className="text-2xl font-inter-bold text-purple-100 mb-1">
-                      22°C
-                    </p>
-                    <p className="text-purple-300 font-inter-regular text-sm">
-                      Perfect for exploring!
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-br from-blue-950/50 to-blue-900/30 border border-blue-800/30 rounded-xl p-6">
-                  <h3 className="text-lg font-inter-semibold text-purple-100 mb-4">
-                    AI Activity
-                  </h3>
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">🤖</div>
-                    <p className="text-2xl font-inter-bold text-purple-100 mb-1">
-                      12
-                    </p>
-                    <p className="text-purple-300 font-inter-regular text-sm">
-                      Suggestions made today
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-br from-pink-950/50 to-pink-900/30 border border-pink-800/30 rounded-xl p-6">
-                  <h3 className="text-lg font-inter-semibold text-purple-100 mb-4">
-                    Immersive Views
-                  </h3>
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">🥽</div>
-                    <p className="text-2xl font-inter-bold text-purple-100 mb-1">
-                      47
-                    </p>
-                    <p className="text-purple-300 font-inter-regular text-sm">
-                      AR/VR/3D experiences
-                    </p>
-                  </div>
-                </div>
-              </div> */}
             </div>
 
             {/* AI Suggestions Sidebar */}
             <div className="max-h-[85vh] overflow-y-scroll">
-              <h2 className="text-2xl font-inter-semibold text-purple-100 mb-6">
-                AI Suggestions
-              </h2>
-
-              <div className="space-y-4 mb-8">
-                {aiSuggestions.map((suggestion, index) => (
-                  <div
-                    key={index}
-                    className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl p-4 hover:bg-purple-950/50 transition-colors cursor-pointer group"
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-inter-semibold text-purple-100">
+                  AI Suggestions
+                </h2>
+                {!recommendationsLoading && recommendations.length > 0 && (
+                  <button
+                    onClick={handleRefreshRecommendations}
+                    className="p-2 bg-purple-950/50 border border-purple-800/30 rounded-lg text-purple-300 hover:bg-purple-950/70 transition-colors"
+                    title="Refresh recommendations"
                   >
-                    <div className="w-full h-32 bg-purple-900/50 rounded-lg mb-4 overflow-hidden">
-                      <img
-                        src={suggestion.image}
-                        alt={suggestion.title}
-                        className="w-full h-full object-cover rounded-lg"
-                      />
-                    </div>
-
-                    <h3 className="text-lg font-inter-semibold text-purple-100 mb-2">
-                      {suggestion.title}
-                    </h3>
-                    <p className="text-purple-300 font-inter-regular text-xs mb-3">
-                      {suggestion.reason}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span className="text-green-300 font-inter-medium text-xs">
-                          {suggestion.confidence}% match
-                        </span>
-                      </div>
-                      <button className="text-purple-400 hover:text-purple-300 transition-colors">
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                    <RefreshCw className="h-4 w-4" />
+                  </button>
+                )}
               </div>
+
+              {/* Render AI Suggestions */}
+              {renderAISuggestions()}
+
+              {/* View All Recommendations Link */}
+              {recommendations.length > 3 && (
+                <Link
+                  to="/recommendations"
+                  className="block w-full text-center py-3 bg-purple-950/30 border border-purple-800/30 rounded-xl text-purple-300 hover:bg-purple-950/50 transition-colors"
+                >
+                  View All Recommendations ({recommendations.length})
+                </Link>
+              )}
             </div>
           </div>
 
+          {/* Experience Travel Section */}
           <div className="mb-12 p-6 rounded-2xl mt-6">
             <div className="mb-8">
               <h2 className="text-2xl font-inter-bold text-purple-100 mb-3">
-                Experience Travel Like Never Before 🚀
+                Experience Travel Like Never Before 
               </h2>
               <p className="text-purple-300 font-inter-regular max-w-2xl">
                 Immerse yourself in destinations with our cutting-edge AR, VR,
@@ -411,7 +503,7 @@ const Dashboard = () => {
               </Link>
 
               <Link
-                to="/3d-models"
+                to="/model"
                 className="bg-blue-900/40 border border-blue-700/50 rounded-xl p-6 hover:bg-blue-800/50 transition-all duration-300 group text-center"
               >
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
