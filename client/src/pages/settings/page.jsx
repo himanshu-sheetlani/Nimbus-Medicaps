@@ -44,8 +44,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Wrapper } from "@/components/global/Wrapper";
-import { Container } from "@/components/global/Container";
+import { Wrapper } from "@/components/global/wrapper";
+import { Container } from "@/components/global/container";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { toast } from "sonner";
 

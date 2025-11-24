@@ -24,8 +24,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Spinner } from "@/components/ui/spinner";
-import { Wrapper } from "@/components/global/Wrapper";
-import { Container } from "@/components/global/Container";
+import { Wrapper } from "@/components/global/wrapper";
+import { Container } from "@/components/global/container";
 
 import { useModelStore } from "@/stores/useModelStore";
 import {

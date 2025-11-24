@@ -23,14 +23,14 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { format } from "date-fns";
-import { Wrapper } from "@/components/global/Wrapper";
-import { Container } from "@/components/global/Container";
+import { Wrapper } from "@/components/global/wrapper";
+import { Container } from "@/components/global/container";
 import { toast } from "sonner";
 
 const TripDetail = () => {
   const { tripId } = useParams();
   const navigate = useNavigate();
-  const { getTripById, loading, error,trip } = useTripStore();
+  const { getTripById, loading, error, trip } = useTripStore();
   const [activeTab, setActiveTab] = useState("overview");
   const [copiedTranscript, setCopiedTranscript] = useState(false);
 
@@ -56,7 +56,8 @@ const TripDetail = () => {
         label: "Queued",
       },
       ringing: {
-        className: "bg-blue-900/50 text-blue-300 border-blue-700/50 animate-pulse",
+        className:
+          "bg-blue-900/50 text-blue-300 border-blue-700/50 animate-pulse",
         label: "Ringing",
       },
       "in-progress": {
@@ -74,11 +75,7 @@ const TripDetail = () => {
     };
 
     const config = statusConfig[status] || statusConfig.queued;
-    return (
-      <Badge className={config.className}>
-        {config.label}
-      </Badge>
-    );
+    return <Badge className={config.className}>{config.label}</Badge>;
   };
 
   const formatDuration = (seconds) => {
@@ -174,7 +171,7 @@ const TripDetail = () => {
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Trips
               </Button>
-              
+
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
                   <MapPin className="h-6 w-6 text-white" />
@@ -262,14 +259,14 @@ const TripDetail = () => {
                             </span>
                           </div>
                         </div>
-                        
+
                         <div>
                           <label className="text-sm font-inter-medium text-purple-200 mb-1 block">
                             Status
                           </label>
                           {getStatusBadge(trip.callStatus)}
                         </div>
-                        
+
                         <div>
                           <label className="text-sm font-inter-medium text-purple-200 mb-1 block">
                             Call ID
@@ -278,7 +275,7 @@ const TripDetail = () => {
                             {trip.callId}
                           </span>
                         </div>
-                        
+
                         <div>
                           <label className="text-sm font-inter-medium text-purple-200 mb-1 block">
                             Phone Number
@@ -311,28 +308,33 @@ const TripDetail = () => {
                               {trip.tripDetails.destination || "Not specified"}
                             </p>
                           </div>
-                          
+
                           <div>
                             <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
                               <Users className="h-4 w-4 inline mr-1" />
                               Travelers
                             </label>
                             <p className="text-purple-100 font-inter-medium text-lg">
-                              {trip.tripDetails.travelers ? `${trip.tripDetails.travelers} people` : "Not specified"}
+                              {trip.tripDetails.travelers
+                                ? `${trip.tripDetails.travelers} people`
+                                : "Not specified"}
                             </p>
                           </div>
-                          
+
                           <div>
                             <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
                               <Calendar className="h-4 w-4 inline mr-1" />
                               Travel Dates
                             </label>
                             <p className="text-purple-100 font-inter-medium">
-                              {trip.tripDetails.startDate ? formatDate(trip.tripDetails.startDate) : "Not specified"}
-                              {trip.tripDetails.endDate && ` - ${formatDate(trip.tripDetails.endDate)}`}
+                              {trip.tripDetails.startDate
+                                ? formatDate(trip.tripDetails.startDate)
+                                : "Not specified"}
+                              {trip.tripDetails.endDate &&
+                                ` - ${formatDate(trip.tripDetails.endDate)}`}
                             </p>
                           </div>
-                          
+
                           <div>
                             <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
                               <DollarSign className="h-4 w-4 inline mr-1" />
@@ -363,7 +365,8 @@ const TripDetail = () => {
                         </p>
                         {trip.aiInsights.processedAt && (
                           <p className="text-purple-400 text-xs font-inter-regular mt-3">
-                            Generated {formatDateTime(trip.aiInsights.processedAt)}
+                            Generated{" "}
+                            {formatDateTime(trip.aiInsights.processedAt)}
                           </p>
                         )}
                       </div>
@@ -416,34 +419,40 @@ const TripDetail = () => {
                         {trip.tripDetails?.destination || "Not specified"}
                       </p>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-inter-medium text-purple-200 mb-1 block">
                         Start Date
                       </label>
                       <p className="text-purple-100 font-inter-regular">
-                        {trip.tripDetails?.startDate ? formatDate(trip.tripDetails.startDate) : "Not specified"}
+                        {trip.tripDetails?.startDate
+                          ? formatDate(trip.tripDetails.startDate)
+                          : "Not specified"}
                       </p>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-inter-medium text-purple-200 mb-1 block">
                         End Date
                       </label>
                       <p className="text-purple-100 font-inter-regular">
-                        {trip.tripDetails?.endDate ? formatDate(trip.tripDetails.endDate) : "Not specified"}
+                        {trip.tripDetails?.endDate
+                          ? formatDate(trip.tripDetails.endDate)
+                          : "Not specified"}
                       </p>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-inter-medium text-purple-200 mb-1 block">
                         Number of Travelers
                       </label>
                       <p className="text-purple-100 font-inter-regular">
-                        {trip.tripDetails?.travelers ? `${trip.tripDetails.travelers} people` : "Not specified"}
+                        {trip.tripDetails?.travelers
+                          ? `${trip.tripDetails.travelers} people`
+                          : "Not specified"}
                       </p>
                     </div>
-                    
+
                     <div>
                       <label className="text-sm font-inter-medium text-purple-200 mb-1 block">
                         Budget
@@ -467,11 +476,16 @@ const TripDetail = () => {
                       </div>
                       <div className="p-6">
                         <div className="flex flex-wrap gap-2">
-                          {trip.tripDetails.preferences.map((preference, index) => (
-                            <Badge key={index} className="bg-blue-900/50 text-blue-300 border-blue-700/50">
-                              {preference}
-                            </Badge>
-                          ))}
+                          {trip.tripDetails.preferences.map(
+                            (preference, index) => (
+                              <Badge
+                                key={index}
+                                className="bg-blue-900/50 text-blue-300 border-blue-700/50"
+                              >
+                                {preference}
+                              </Badge>
+                            )
+                          )}
                         </div>
                       </div>
                     </div>
@@ -488,11 +502,16 @@ const TripDetail = () => {
                       </div>
                       <div className="p-6">
                         <div className="flex flex-wrap gap-2">
-                          {trip.tripDetails.activities.map((activity, index) => (
-                            <Badge key={index} className="bg-green-900/50 text-green-300 border-green-700/50">
-                              {activity}
-                            </Badge>
-                          ))}
+                          {trip.tripDetails.activities.map(
+                            (activity, index) => (
+                              <Badge
+                                key={index}
+                                className="bg-green-900/50 text-green-300 border-green-700/50"
+                              >
+                                {activity}
+                              </Badge>
+                            )
+                          )}
                         </div>
                       </div>
                     </div>
@@ -538,8 +557,12 @@ const TripDetail = () => {
                   ) : (
                     <div className="text-center py-8">
                       <FileText className="h-12 w-12 text-purple-400 mx-auto mb-3" />
-                      <p className="text-purple-300 font-inter-regular">No transcript available</p>
-                      <p className="text-purple-400 text-sm">The call transcript will appear here once processed</p>
+                      <p className="text-purple-300 font-inter-regular">
+                        No transcript available
+                      </p>
+                      <p className="text-purple-400 text-sm">
+                        The call transcript will appear here once processed
+                      </p>
                     </div>
                   )}
                 </div>
@@ -566,7 +589,8 @@ const TripDetail = () => {
                           </p>
                           {trip.aiInsights.processedAt && (
                             <p className="text-purple-400 text-sm font-inter-regular mt-4">
-                              Generated on {formatDateTime(trip.aiInsights.processedAt)}
+                              Generated on{" "}
+                              {formatDateTime(trip.aiInsights.processedAt)}
                             </p>
                           )}
                         </div>
@@ -585,7 +609,10 @@ const TripDetail = () => {
                         <div className="p-6">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {trip.aiInsights.keyPoints.map((point, index) => (
-                              <div key={index} className="flex items-start gap-3 p-4 bg-purple-950/30 rounded-lg border border-purple-800/30">
+                              <div
+                                key={index}
+                                className="flex items-start gap-3 p-4 bg-purple-950/30 rounded-lg border border-purple-800/30"
+                              >
                                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
                                 <span className="text-purple-200 font-inter-regular text-sm">
                                   {point}
@@ -605,7 +632,8 @@ const TripDetail = () => {
                         AI insights not available
                       </h3>
                       <p className="text-purple-300 font-inter-regular">
-                        AI analysis will be available once the call is completed and processed
+                        AI analysis will be available once the call is completed
+                        and processed
                       </p>
                     </div>
                   </div>

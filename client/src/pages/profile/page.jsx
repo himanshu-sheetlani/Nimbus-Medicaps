@@ -38,8 +38,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Wrapper } from "@/components/global/Wrapper";
-import { Container } from "@/components/global/Container";
+import { Wrapper } from "@/components/global/wrapper";
+import { Container } from "@/components/global/container";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { toast } from "sonner";
 

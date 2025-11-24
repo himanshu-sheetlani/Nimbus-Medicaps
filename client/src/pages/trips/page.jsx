@@ -30,8 +30,8 @@ import {
   Plane,
 } from "lucide-react";
 import { format } from "date-fns";
-import { Wrapper } from "@/components/global/Wrapper";
-import { Container } from "@/components/global/Container";
+import { Wrapper } from "@/components/global/wrapper";
+import { Container } from "@/components/global/container";
 import { Link } from "react-router-dom";
 
 const Trips = () => {
