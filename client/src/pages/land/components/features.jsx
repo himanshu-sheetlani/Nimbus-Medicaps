@@ -1,5 +1,5 @@
-import { Wrapper } from "@/components/global/Wrapper";
-import { Container } from "@/components/global/Container";
+import { Wrapper } from "@/components/global/wrapper";
+import { Container } from "@/components/global/container";
 import SectionBadge from "@/components/ui/section-badge";
 import { features } from "@/constant/land";
 
