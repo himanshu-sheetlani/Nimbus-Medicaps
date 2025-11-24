@@ -9,6 +9,8 @@ import {
   sanitizeOnboardingData,
 } from "../utils/validation.js";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export const signUp = asyncHandler(async (req, res) => {
   const { idToken } = req.body;
   if (!idToken) {
@@ -24,8 +26,8 @@ export const signUp = asyncHandler(async (req, res) => {
   const token = generateToken(user._id);
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
   });
   return res
     .status(200)
