@@ -38,7 +38,7 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:3000", "https://mediverse-pixel.vercel.app"],
     credentials: true,
   })
 );
@@ -66,7 +66,7 @@ app.use(
 import authRouter from "./routes/auth.route.js";
 import modelRouter from "./routes/model.route.js";
 import vapiRouter from "./routes/vapi.route.js";
-import recommendationRouter from "./routes/recommendation.route.js"
+import recommendationRouter from "./routes/recommendation.route.js";
 import { startTranscriptPolling } from "./controllers/vapi.controller.js";
 
 // Start background transcript polling
