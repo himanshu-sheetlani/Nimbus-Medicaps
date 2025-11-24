@@ -66,6 +66,7 @@ app.use(
 import authRouter from "./routes/auth.route.js";
 import modelRouter from "./routes/model.route.js";
 import vapiRouter from "./routes/vapi.route.js";
+import recommendationRouter from "./routes/recommendation.route.js"
 import { startTranscriptPolling } from "./controllers/vapi.controller.js";
 
 // Start background transcript polling
@@ -74,6 +75,7 @@ startTranscriptPolling();
 app.use("/api/auth", authRouter);
 app.use("/api/3dmodel", modelRouter);
 app.use("/api/vapi", vapiRouter);
+app.use("/api/recommendations", recommendationRouter);
 
 // Routes
 app.get("/", (req, res) => {
