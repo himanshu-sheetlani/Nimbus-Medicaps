@@ -1,6 +1,6 @@
 import { Suspense, lazy, useState, useEffect } from "react";
 import { Container } from "@/components/global/container";
-import Hero from "./components/Hero";
+import Hero from "./components/hero";
 import Feature from "./components/features";
 import Pricing from "./components/pricing";
 import Testinomals from "./components/testimonials";
