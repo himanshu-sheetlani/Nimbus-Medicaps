@@ -15,6 +15,7 @@ import {
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 import logo from "@/assets/logo.png";
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -22,6 +23,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { theme } = useTheme();
 
   const sidebarItems = [
     {
@@ -90,30 +92,36 @@ const Sidebar = ({ isOpen, onClose }) => {
     <>
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-zinc-900 via-zinc-900 to-black border-r border-zinc-700/40 transform ${
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-sidebar border-r border-sidebar-border transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-all duration-500 ease-in-out lg:translate-x-0 lg:static lg:inset-0 backdrop-blur-xl`}
-        style={{
-          background: `
+        } transition-all duration-500 ease-in-out lg:translate-x-0 lg:static lg:inset-0 backdrop-blur-xl shadow-lg`}
+        style={
+          theme === "dark"
+            ? {
+                background: `
             linear-gradient(135deg, 
-              rgba(24, 24, 27, 0.95) 0%, 
-              rgba(39, 39, 42, 0.95) 50%, 
-              rgba(0, 0, 0, 0.95) 100%
+              rgba(18, 18, 18, 0.95) 0%, 
+              rgba(30, 30, 30, 0.95) 50%, 
+              rgba(18, 18, 18, 0.95) 100%
             )
           `,
-        }}
+              }
+            : {}
+        }
       >
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between h-16 px-6 border-b border-zinc-700/40 backdrop-blur-sm">
+        <div className="flex items-center justify-between h-16 px-6 border-b border-sidebar-border backdrop-blur-sm">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center transform transition-transform duration-300 hover:scale-110 hover:rotate-12">
               <img src={logo} alt="Nimbus Logo" className="w-6 h-6" />
             </div>
-            <h1 className="text-xl font-inter-bold text-white">NIMBUS</h1>
+            <h1 className="text-xl font-inter-bold text-sidebar-foreground">
+              NIMBUS
+            </h1>
           </div>
           <button
             onClick={onClose}
-            className="lg:hidden text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-700/50 transition-all duration-200 transform hover:scale-110"
+            className="lg:hidden text-sidebar-foreground/60 hover:text-sidebar-foreground p-1 rounded-lg hover:bg-sidebar-accent transition-all duration-200 transform hover:scale-110"
           >
             <X className="h-5 w-5" />
           </button>
@@ -127,8 +135,8 @@ const Sidebar = ({ isOpen, onClose }) => {
               onClick={() => handleNavigation(item.href)}
               className={`group w-full flex items-center px-3 py-3 rounded-lg text-sm font-inter-medium transition-all duration-200 transform hover:scale-[1.02] relative overflow-hidden ${
                 isActiveTab(item.href)
-                  ? "bg-white/10 text-white shadow-sm border border-white/10"
-                  : "text-zinc-400 hover:text-white hover:bg-zinc-700/30 border border-transparent"
+                  ? "bg-sidebar-accent text-sidebar-primary shadow-sm border border-sidebar-border"
+                  : "text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 border border-transparent"
               }`}
               style={{
                 animationDelay: `${index * 100}ms`,
@@ -138,9 +146,9 @@ const Sidebar = ({ isOpen, onClose }) => {
               {/* Subtle background glow for active state */}
               {isActiveTab(item.href) && (
                 <div
-                  className="absolute inset-0 rounded-lg opacity-30"
+                  className="absolute inset-0 rounded-lg opacity-20"
                   style={{
-                    background: `linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, transparent 70%)`,
+                    background: `linear-gradient(135deg, var(--primary) 0%, transparent 70%)`,
                   }}
                 />
               )}
@@ -149,8 +157,8 @@ const Sidebar = ({ isOpen, onClose }) => {
               <div
                 className={`relative mr-3 p-1.5 rounded-md transition-all duration-200 ${
                   isActiveTab(item.href)
-                    ? `bg-gradient-to-r ${item.gradient} shadow-sm`
-                    : `text-zinc-500 group-hover:text-zinc-300 group-hover:bg-zinc-600/50`
+                    ? `bg-linear-to-r ${item.gradient} shadow-sm`
+                    : `text-sidebar-foreground/50 group-hover:text-sidebar-foreground/80 group-hover:bg-sidebar-accent`
                 }`}
               >
                 <item.icon
@@ -166,20 +174,20 @@ const Sidebar = ({ isOpen, onClose }) => {
 
               {/* Simple active indicator */}
               {isActiveTab(item.href) && (
-                <div className="absolute right-3 w-1.5 h-1.5 bg-white/70 rounded-full" />
+                <div className="absolute right-3 w-1.5 h-1.5 bg-sidebar-primary rounded-full" />
               )}
             </button>
           ))}
         </nav>
 
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-zinc-700/40 backdrop-blur-sm">
+        <div className="p-4 border-t border-sidebar-border backdrop-blur-sm">
           <button
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="group w-full flex items-center px-3 py-3 text-sm font-inter-medium text-zinc-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200 border border-transparent hover:border-red-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group w-full flex items-center px-3 py-3 text-sm font-inter-medium text-sidebar-foreground/70 hover:text-error hover:bg-error/5 rounded-lg transition-all duration-200 border border-transparent hover:border-error/20 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <div className="mr-3 p-1.5 rounded-md transition-all duration-200 group-hover:bg-red-500/20">
+            <div className="mr-3 p-1.5 rounded-md transition-all duration-200 group-hover:bg-error/10">
               <LogOut
                 className={`h-4 w-4 transition-all duration-200 ${
                   isLoggingOut ? "animate-spin" : ""

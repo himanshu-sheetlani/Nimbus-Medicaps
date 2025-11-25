@@ -15,7 +15,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="h-screen bg-black text-white flex overflow-hidden relative">
+    <div className="h-screen bg-theme text-primary-theme flex overflow-hidden relative">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={handleSidebarClose} />
 
@@ -25,7 +25,7 @@ const Layout = () => {
         <Topbar onMenuClick={handleMenuClick} />
 
         {/* Main Content - This is where the page content will be rendered */}
-        <main className="flex-1 overflow-y-auto bg-black p-6">
+        <main className="flex-1 overflow-y-auto bg-surface p-6">
           <Outlet />
         </main>
       </div>

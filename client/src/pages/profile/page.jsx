@@ -98,13 +98,13 @@ const Profile = () => {
 
   if (!user && isLoading) {
     return (
-      <div className="min-h-screen w-full">
+      <div className="min-h-screen w-full bg-background">
         <Wrapper className="pt-6">
           <Container>
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="flex items-center space-x-2">
-                <RefreshCw className="h-6 w-6 animate-spin text-purple-400" />
-                <span className="text-purple-100 font-inter-medium">
+                <RefreshCw className="h-6 w-6 animate-spin text-primary" />
+                <span className="text-foreground font-inter-medium">
                   Loading profile...
                 </span>
               </div>
@@ -117,11 +117,11 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen w-full">
+      <div className="min-h-screen w-full bg-background">
         <Wrapper className="pt-6">
           <Container>
             <div className="flex items-center justify-center min-h-[400px]">
-              <div className="text-center text-purple-300">
+              <div className="text-center text-muted-foreground">
                 <User className="h-16 w-16 mx-auto mb-4" />
                 <p className="font-inter-medium">Unable to load profile</p>
               </div>
@@ -135,18 +135,17 @@ const Profile = () => {
   const displayUser = isEditing ? editedUser : user;
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full bg-background">
       <Wrapper className="pt-6">
         <Container>
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
-              
               <div>
-                <h1 className="text-4xl font-inter-bold text-purple-100">
+                <h1 className="text-4xl font-inter-bold text-foreground">
                   Profile
                 </h1>
-                <p className="text-purple-300 font-inter-regular mt-1">
+                <p className="text-muted-foreground font-inter-regular mt-1">
                   Manage your account and travel preferences
                 </p>
               </div>
@@ -155,7 +154,7 @@ const Profile = () => {
             {!isEditing ? (
               <Button
                 onClick={handleEdit}
-                className="bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-500 hover:to-purple-600 transition-all duration-200 font-inter-medium"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 font-inter-medium"
               >
                 <Edit3 className="h-4 w-4 mr-2" />
                 Edit Profile
@@ -165,7 +164,7 @@ const Profile = () => {
                 <Button
                   onClick={handleCancel}
                   variant="outline"
-                  className="border-purple-700/50 text-purple-300 hover:bg-purple-950/50 font-inter-medium"
+                  className="border-border text-foreground hover:bg-accent/10 font-inter-medium"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Cancel
@@ -173,7 +172,7 @@ const Profile = () => {
                 <Button
                   onClick={handleSave}
                   disabled={isLoading}
-                  className="bg-gradient-to-r from-purple-600 to-purple-700 text-white hover:from-purple-500 hover:to-purple-600 transition-all duration-200 font-inter-medium"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 font-inter-medium"
                 >
                   <Save className="h-4 w-4 mr-2" />
                   Save Changes
@@ -187,12 +186,12 @@ const Profile = () => {
             <div className="lg:col-span-1">
               <div className="space-y-6 sticky top-6">
                 {/* Profile Card */}
-                <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
+                <div className="bg-card border border-border rounded-xl">
                   <div className="p-6">
                     <div className="text-center">
                       {/* Profile Picture */}
                       <div className="relative mx-auto w-24 h-24 mb-4">
-                        <div className="w-24 h-24 rounded-full bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center">
+                        <div className="w-24 h-24 rounded-full bg-gradient-to-r from-primary to-accent flex items-center justify-center">
                           {displayUser.profile ? (
                             <img
                               src={displayUser.profile}
@@ -200,13 +199,13 @@ const Profile = () => {
                               className="w-24 h-24 rounded-full object-cover"
                             />
                           ) : (
-                            <User className="h-12 w-12 text-white" />
+                            <User className="h-12 w-12 text-primary-foreground" />
                           )}
                         </div>
                         {isEditing && (
                           <Button
                             size="sm"
-                            className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full bg-purple-600 hover:bg-purple-700 text-white p-0"
+                            className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground p-0"
                           >
                             <Camera className="h-4 w-4" />
                           </Button>
@@ -221,7 +220,7 @@ const Profile = () => {
                             onChange={(e) =>
                               handleInputChange("name", e.target.value)
                             }
-                            className="text-center text-xl font-inter-semibold bg-purple-950/50 border-purple-800/30 text-purple-100"
+                            className="text-center text-xl font-inter-semibold bg-card border-border text-foreground"
                             placeholder="Full Name"
                           />
                           <div className="grid grid-cols-2 gap-2">
@@ -230,7 +229,7 @@ const Profile = () => {
                               onChange={(e) =>
                                 handleInputChange("firstName", e.target.value)
                               }
-                              className="text-center text-sm bg-purple-950/50 border-purple-800/30 text-purple-300"
+                              className="text-center text-sm bg-card border-border text-foreground"
                               placeholder="First Name"
                             />
                             <Input
@@ -238,18 +237,18 @@ const Profile = () => {
                               onChange={(e) =>
                                 handleInputChange("lastName", e.target.value)
                               }
-                              className="text-center text-sm bg-purple-950/50 border-purple-800/30 text-purple-300"
+                              className="text-center text-sm bg-card border-border text-foreground"
                               placeholder="Last Name"
                             />
                           </div>
                         </div>
                       ) : (
                         <div className="mb-4">
-                          <h2 className="text-xl font-inter-semibold text-purple-100 mb-2">
+                          <h2 className="text-xl font-inter-semibold text-foreground mb-2">
                             {displayUser.name}
                           </h2>
                           {(displayUser.firstName || displayUser.lastName) && (
-                            <p className="text-sm text-purple-300 font-inter-regular">
+                            <p className="text-sm text-muted-foreground font-inter-regular">
                               {displayUser.firstName} {displayUser.lastName}
                             </p>
                           )}
@@ -263,33 +262,33 @@ const Profile = () => {
                           onChange={(e) =>
                             handleInputChange("username", e.target.value)
                           }
-                          className="text-center bg-purple-950/50 border-purple-800/30 text-purple-300 mb-2"
+                          className="text-center bg-card border-border text-foreground mb-2"
                           placeholder="@username"
                         />
                       ) : (
-                        <p className="text-purple-300 mb-2 font-inter-regular">
+                        <p className="text-muted-foreground mb-2 font-inter-regular">
                           @{displayUser.username || "Not set"}
                         </p>
                       )}
 
                       {/* Email */}
-                      <div className="flex items-center justify-center gap-2 text-purple-300 mb-4">
-                        <Mail className="h-4 w-4 text-purple-400" />
+                      <div className="flex items-center justify-center gap-2 text-muted-foreground mb-4">
+                        <Mail className="h-4 w-4 text-accent" />
                         <span className="text-sm font-inter-regular">
                           {displayUser.email}
                         </span>
                       </div>
 
                       {/* Hometown */}
-                      <div className="flex items-center justify-center gap-2 text-purple-300">
-                        <MapPin className="h-4 w-4 text-purple-400" />
+                      <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                        <MapPin className="h-4 w-4 text-accent" />
                         {isEditing ? (
                           <Input
                             value={editedUser.hometown || ""}
                             onChange={(e) =>
                               handleInputChange("hometown", e.target.value)
                             }
-                            className="text-sm bg-purple-950/50 border-purple-800/30 text-purple-300"
+                            className="text-sm bg-card border-border text-foreground"
                             placeholder="Hometown"
                           />
                         ) : (
@@ -307,8 +306,8 @@ const Profile = () => {
                           }
                           className={
                             displayUser.onBoarded
-                              ? "bg-green-900/50 text-green-300 border-green-700/50"
-                              : "bg-yellow-900/50 text-yellow-300 border-yellow-700/50"
+                              ? "bg-success/20 text-success border-success/30"
+                              : "bg-warning/20 text-warning border-warning/30"
                           }
                         >
                           {displayUser.onBoarded
@@ -321,36 +320,36 @@ const Profile = () => {
                 </div>
 
                 {/* Quick Stats */}
-                <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                  <div className="p-6 border-b border-zinc-400/20">
-                    <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                      <Award className="h-5 w-5 text-purple-400" />
+                <div className="bg-card border border-border rounded-xl">
+                  <div className="p-6 border-b border-border">
+                    <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                      <Award className="h-5 w-5 text-accent" />
                       Travel Stats
                     </h3>
                   </div>
                   <div className="p-6 space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-purple-300 font-inter-regular">
+                      <span className="text-muted-foreground font-inter-regular">
                         Member since
                       </span>
-                      <span className="text-purple-100 font-inter-medium">
+                      <span className="text-foreground font-inter-medium">
                         {new Date(displayUser.createdAt).toLocaleDateString()}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-purple-300 font-inter-regular">
+                      <span className="text-muted-foreground font-inter-regular">
                         Countries visited
                       </span>
-                      <span className="text-purple-100 font-inter-medium">
+                      <span className="text-foreground font-inter-medium">
                         {displayUser.experience?.visitedCountries ||
                           "Not specified"}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-purple-300 font-inter-regular">
+                      <span className="text-muted-foreground font-inter-regular">
                         Travel experience
                       </span>
-                      <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50">
+                      <Badge className="bg-accent/20 text-accent border-accent/30">
                         {displayUser.experience?.travelExperience || "Not set"}
                       </Badge>
                     </div>
@@ -358,33 +357,33 @@ const Profile = () => {
                 </div>
 
                 {/* Profile Completion */}
-                <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                  <div className="p-6 border-b border-zinc-400/20">
-                    <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                      <Settings className="h-5 w-5 text-purple-400" />
+                <div className="bg-card border border-border rounded-xl">
+                  <div className="p-6 border-b border-border">
+                    <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                      <Settings className="h-5 w-5 text-accent" />
                       Profile Completion
                     </h3>
                   </div>
                   <div className="p-6">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-purple-300 text-sm">
+                        <span className="text-muted-foreground text-sm">
                           Basic Info
                         </span>
-                        <Badge className="bg-green-900/50 text-green-300 border-green-700/50">
+                        <Badge className="bg-success/20 text-success border-success/30">
                           Complete
                         </Badge>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-purple-300 text-sm">
+                        <span className="text-muted-foreground text-sm">
                           Travel Preferences
                         </span>
                         <Badge
                           className={`${
                             displayUser.travelPreferences?.travelStyle?.length >
                             0
-                              ? "bg-green-900/50 text-green-300 border-green-700/50"
-                              : "bg-yellow-900/50 text-yellow-300 border-yellow-700/50"
+                              ? "bg-success/20 text-success border-success/30"
+                              : "bg-warning/20 text-warning border-warning/30"
                           }`}
                         >
                           {displayUser.travelPreferences?.travelStyle?.length >
@@ -394,14 +393,14 @@ const Profile = () => {
                         </Badge>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-purple-300 text-sm">
+                        <span className="text-muted-foreground text-sm">
                           Interests
                         </span>
                         <Badge
                           className={`${
                             displayUser.interests?.activityInterests?.length > 0
-                              ? "bg-green-900/50 text-green-300 border-green-700/50"
-                              : "bg-yellow-900/50 text-yellow-300 border-yellow-700/50"
+                              ? "bg-success/20 text-success border-success/30"
+                              : "bg-warning/20 text-warning border-warning/30"
                           }`}
                         >
                           {displayUser.interests?.activityInterests?.length > 0
@@ -414,14 +413,14 @@ const Profile = () => {
                     {/* Progress Bar */}
                     <div className="mt-4">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-purple-300 text-sm font-inter-medium">
+                        <span className="text-muted-foreground text-sm font-inter-medium">
                           Overall Progress
                         </span>
-                        <span className="text-purple-100 text-sm">75%</span>
+                        <span className="text-foreground text-sm">75%</span>
                       </div>
-                      <div className="w-full bg-purple-950/50 rounded-full h-2">
+                      <div className="w-full bg-muted rounded-full h-2">
                         <div
-                          className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full"
+                          className="bg-gradient-to-r from-primary to-accent h-2 rounded-full"
                           style={{ width: "75%" }}
                         ></div>
                       </div>
@@ -434,17 +433,17 @@ const Profile = () => {
             {/* Right Column - Detailed Info */}
             <div className="lg:col-span-2 space-y-6">
               {/* Travel Preferences */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Plane className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Plane className="h-5 w-5 text-accent" />
                     Travel Preferences
                   </h3>
                 </div>
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Users className="h-4 w-4 inline mr-2" />
                         Travel Style
                       </label>
@@ -453,13 +452,13 @@ const Profile = () => {
                           (style, index) => (
                             <Badge
                               key={index}
-                              className="bg-blue-900/50 text-blue-300 border-blue-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {style}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -467,7 +466,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Wallet className="h-4 w-4 inline mr-2" />
                         Budget Range
                       </label>
@@ -476,13 +475,13 @@ const Profile = () => {
                           (budget, index) => (
                             <Badge
                               key={index}
-                              className="bg-green-900/50 text-green-300 border-green-700/50"
+                              className="bg-success/20 text-success border-success/30"
                             >
                               {budget}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -490,7 +489,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Users className="h-4 w-4 inline mr-2" />
                         Group Size
                       </label>
@@ -499,13 +498,13 @@ const Profile = () => {
                           (size, index) => (
                             <Badge
                               key={index}
-                              className="bg-orange-900/50 text-orange-300 border-orange-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {size}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -513,7 +512,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Calendar className="h-4 w-4 inline mr-2" />
                         Trip Duration
                       </label>
@@ -522,13 +521,13 @@ const Profile = () => {
                           (duration, index) => (
                             <Badge
                               key={index}
-                              className="bg-purple-900/50 text-purple-300 border-purple-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {duration}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -536,7 +535,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Clock className="h-4 w-4 inline mr-2" />
                         Travel Frequency
                       </label>
@@ -545,13 +544,13 @@ const Profile = () => {
                           (frequency, index) => (
                             <Badge
                               key={index}
-                              className="bg-cyan-900/50 text-cyan-300 border-cyan-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {frequency}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -559,7 +558,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Home className="h-4 w-4 inline mr-2" />
                         Accommodation Type
                       </label>
@@ -568,13 +567,13 @@ const Profile = () => {
                           (type, index) => (
                             <Badge
                               key={index}
-                              className="bg-pink-900/50 text-pink-300 border-pink-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {type}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -582,7 +581,7 @@ const Profile = () => {
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Car className="h-4 w-4 inline mr-2" />
                         Transportation Preference
                       </label>
@@ -591,13 +590,13 @@ const Profile = () => {
                           (transport, index) => (
                             <Badge
                               key={index}
-                              className="bg-indigo-900/50 text-indigo-300 border-indigo-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {transport}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -608,17 +607,17 @@ const Profile = () => {
               </div>
 
               {/* Interests & Preferences */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Heart className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Heart className="h-5 w-5 text-accent" />
                     Interests & Preferences
                   </h3>
                 </div>
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Thermometer className="h-4 w-4 inline mr-2" />
                         Climate Preference
                       </label>
@@ -627,13 +626,13 @@ const Profile = () => {
                           (climate, index) => (
                             <Badge
                               key={index}
-                              className="bg-teal-900/50 text-teal-300 border-teal-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {climate}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -641,7 +640,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <MapIcon className="h-4 w-4 inline mr-2" />
                         Destination Types
                       </label>
@@ -650,13 +649,13 @@ const Profile = () => {
                           (type, index) => (
                             <Badge
                               key={index}
-                              className="bg-emerald-900/50 text-emerald-300 border-emerald-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {type}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -664,7 +663,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <UtensilsCrossed className="h-4 w-4 inline mr-2" />
                         Cuisine Preferences
                       </label>
@@ -673,13 +672,13 @@ const Profile = () => {
                           (cuisine, index) => (
                             <Badge
                               key={index}
-                              className="bg-yellow-900/50 text-yellow-300 border-yellow-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {cuisine}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -687,7 +686,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Activity className="h-4 w-4 inline mr-2" />
                         Activity Interests
                       </label>
@@ -696,13 +695,13 @@ const Profile = () => {
                           (activity, index) => (
                             <Badge
                               key={index}
-                              className="bg-red-900/50 text-red-300 border-red-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {activity}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -713,17 +712,17 @@ const Profile = () => {
               </div>
 
               {/* Experience & Background */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Mountain className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Mountain className="h-5 w-5 text-accent" />
                     Experience & Background
                   </h3>
                 </div>
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-foreground mb-2 block">
                         <Star className="h-4 w-4 inline mr-2" />
                         Travel Experience
                       </label>
@@ -737,11 +736,11 @@ const Profile = () => {
                               e.target.value
                             )
                           }
-                          className="bg-purple-950/50 border-purple-800/30 text-purple-100"
+                          className="bg-card border-border text-foreground"
                           placeholder="e.g., Beginner, Intermediate, Expert"
                         />
                       ) : (
-                        <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50">
+                        <Badge className="bg-accent/20 text-accent border-accent/30">
                           {displayUser.experience?.travelExperience ||
                             "Not specified"}
                         </Badge>
@@ -749,7 +748,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-muted-foreground mb-2 block">
                         <Languages className="h-4 w-4 inline mr-2" />
                         Languages
                       </label>
@@ -758,13 +757,13 @@ const Profile = () => {
                           (language, index) => (
                             <Badge
                               key={index}
-                              className="bg-blue-900/50 text-blue-300 border-blue-700/50"
+                              className="bg-accent/20 text-accent border-accent/30"
                             >
                               {language}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             Not specified
                           </span>
                         )}
@@ -772,7 +771,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-muted-foreground mb-2 block">
                         <Globe className="h-4 w-4 inline mr-2" />
                         Countries Visited
                       </label>
@@ -786,11 +785,11 @@ const Profile = () => {
                               e.target.value
                             )
                           }
-                          className="bg-purple-950/50 border-purple-800/30 text-purple-100"
+                          className="bg-card border-border text-foreground"
                           placeholder="e.g., 15+ countries"
                         />
                       ) : (
-                        <span className="text-purple-100 font-inter-medium">
+                        <span className="text-foreground font-inter-medium">
                           {displayUser.experience?.visitedCountries ||
                             "Not specified"}
                         </span>
@@ -798,7 +797,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-muted-foreground mb-2 block">
                         <Heart className="h-4 w-4 inline mr-2" />
                         Dream Destinations
                       </label>
@@ -812,12 +811,12 @@ const Profile = () => {
                               e.target.value
                             )
                           }
-                          className="bg-purple-950/50 border-purple-800/30 text-purple-100"
+                          className="bg-card border-border text-foreground"
                           placeholder="Places you dream to visit..."
                           rows={3}
                         />
                       ) : (
-                        <p className="text-purple-300 font-inter-regular text-sm">
+                        <p className="text-muted-foreground font-inter-regular text-sm">
                           {displayUser.experience?.dreamDestinations ||
                             "Not specified"}
                         </p>
@@ -828,17 +827,17 @@ const Profile = () => {
               </div>
 
               {/* Special Requirements */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-accent" />
                     Special Requirements
                   </h3>
                 </div>
                 <div className="p-6 space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-muted-foreground mb-2 block">
                         <Accessibility className="h-4 w-4 inline mr-2" />
                         Accessibility Needs
                       </label>
@@ -854,12 +853,12 @@ const Profile = () => {
                               e.target.value
                             )
                           }
-                          className="bg-purple-950/50 border-purple-800/30 text-purple-100"
+                          className="bg-card border-border text-foreground"
                           placeholder="Any accessibility requirements..."
                           rows={2}
                         />
                       ) : (
-                        <p className="text-purple-300 font-inter-regular text-sm">
+                        <p className="text-muted-foreground font-inter-regular text-sm">
                           {displayUser.specialRequirements?.accessibility ||
                             "None specified"}
                         </p>
@@ -867,7 +866,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-muted-foreground mb-2 block">
                         <Utensils className="h-4 w-4 inline mr-2" />
                         Dietary Restrictions
                       </label>
@@ -876,13 +875,13 @@ const Profile = () => {
                           (restriction, index) => (
                             <Badge
                               key={index}
-                              className="bg-orange-900/50 text-orange-300 border-orange-700/50"
+                              className="bg-secondary text-secondary-foreground border-secondary"
                             >
                               {restriction}
                             </Badge>
                           )
                         ) || (
-                          <span className="text-purple-400 text-sm font-inter-regular">
+                          <span className="text-muted-foreground text-sm font-inter-regular">
                             None specified
                           </span>
                         )}
@@ -890,7 +889,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-muted-foreground mb-2 block">
                         <BookOpen className="h-4 w-4 inline mr-2" />
                         Special Interests
                       </label>
@@ -907,12 +906,12 @@ const Profile = () => {
                               e.target.value
                             )
                           }
-                          className="bg-purple-950/50 border-purple-800/30 text-purple-100"
+                          className="bg-card border-border text-foreground"
                           placeholder="Photography, wildlife, architecture, etc..."
                           rows={2}
                         />
                       ) : (
-                        <p className="text-purple-300 font-inter-regular text-sm">
+                        <p className="text-muted-foreground font-inter-regular text-sm">
                           {displayUser.specialRequirements?.specialInterests ||
                             "None specified"}
                         </p>
@@ -920,7 +919,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                      <label className="text-sm font-inter-medium text-purple-200 mb-2 block">
+                      <label className="text-sm font-inter-medium text-muted-foreground mb-2 block">
                         <StickyNote className="h-4 w-4 inline mr-2" />
                         Additional Notes
                       </label>
@@ -937,12 +936,12 @@ const Profile = () => {
                               e.target.value
                             )
                           }
-                          className="bg-purple-950/50 border-purple-800/30 text-purple-100"
+                          className="bg-card border-border text-foreground"
                           placeholder="Any other important information..."
                           rows={2}
                         />
                       ) : (
-                        <p className="text-purple-300 font-inter-regular text-sm">
+                        <p className="text-muted-foreground font-inter-regular text-sm">
                           {displayUser.specialRequirements?.additionalNotes ||
                             "None specified"}
                         </p>
@@ -953,44 +952,44 @@ const Profile = () => {
               </div>
 
               {/* Trips Summary */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Plane className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Plane className="h-5 w-5 text-accent" />
                     Recent Trips
                   </h3>
                 </div>
                 <div className="p-6">
                   {displayUser.trips && displayUser.trips.length > 0 ? (
                     <div className="space-y-3">
-                      <p className="text-purple-200 font-inter-medium">
+                      <p className="text-foreground font-inter-medium">
                         Total Trips: {displayUser.trips.length}
                       </p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
                         {displayUser.trips.slice(0, 6).map((trip, index) => (
                           <div
                             key={index}
-                            className="bg-purple-900/30 p-3 rounded-lg border border-purple-700/50"
+                            className="bg-secondary/30 p-3 rounded-lg border border-border"
                           >
-                            <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50 text-xs">
+                            <Badge className="bg-secondary text-secondary-foreground border-border text-xs">
                               Trip #{index + 1}
                             </Badge>
                           </div>
                         ))}
                       </div>
                       {displayUser.trips.length > 6 && (
-                        <p className="text-purple-400 text-sm font-inter-regular">
+                        <p className="text-muted-foreground text-sm font-inter-regular">
                           +{displayUser.trips.length - 6} more trips
                         </p>
                       )}
                     </div>
                   ) : (
                     <div className="text-center py-6">
-                      <Plane className="h-12 w-12 text-purple-400 mx-auto mb-3" />
-                      <p className="text-purple-300 font-inter-regular">
+                      <Plane className="h-12 w-12 text-accent mx-auto mb-3" />
+                      <p className="text-muted-foreground font-inter-regular">
                         No trips yet
                       </p>
-                      <p className="text-purple-400 text-sm">
+                      <p className="text-muted-foreground text-sm">
                         Start planning your first adventure!
                       </p>
                     </div>

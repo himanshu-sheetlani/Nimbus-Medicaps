@@ -12,14 +12,14 @@ const WorldMap = lazy(() => import("@/components/ui/world-map"));
 
 // Loading component for instant feedback
 const LoadingSpinner = () => (
-  <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-    <Spinner/>
+  <div className="fixed inset-0 bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 flex items-center justify-center z-50">
+    <Spinner />
   </div>
 );
 
 // Fallback component for WorldMap
 const MapFallback = () => (
-  <div className="w-full h-full bg-gradient-to-br from-gray-900 via-black to-gray-800 opacity-30" />
+  <div className="w-full h-full bg-gradient-to-br from-zinc-800 via-zinc-950 to-zinc-900 opacity-30" />
 );
 
 const Land = () => {
@@ -71,9 +71,9 @@ const Land = () => {
   ];
 
   return (
-    <div className="min-h-screen w-full bg-black relative overflow-x-hidden flex items-center justify-center">
-      {/* Background with lazy loaded map */}
-      <div className="absolute inset-0 w-full h-full z-0">
+    <div className="min-h-screen w-full bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-x-hidden flex items-center justify-center">
+      {/* Background with lazy loaded map - only visible on large screens */}
+      <div className="absolute inset-0 w-full h-full z-0 hidden lg:block">
         {showMap ? (
           <Suspense fallback={<MapFallback />}>
             <WorldMap
@@ -89,6 +89,9 @@ const Land = () => {
           <MapFallback />
         )}
       </div>
+
+      {/* Gradient overlay for small screens */}
+      <div className="absolute inset-0 w-full h-full z-0 lg:hidden bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950" />
 
       {/* Main Content */}
       <div className="relative z-10 w-full flex items-center justify-center">

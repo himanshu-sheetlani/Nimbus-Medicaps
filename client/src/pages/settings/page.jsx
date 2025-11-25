@@ -119,18 +119,22 @@ const Setting = () => {
     children,
     danger = false,
   }) => (
-    <div className="flex items-center justify-between p-4 border-b border-zinc-400/20 last:border-b-0 hover:bg-purple-950/20 transition-colors">
+    <div className="flex items-center justify-between p-4 border-b border-border last:border-b-0 hover:bg-accent/5 transition-colors">
       <div className="flex items-center gap-3">
         <Icon
-          className={`h-5 w-5 ${danger ? "text-red-400" : "text-purple-400"}`}
+          className={`h-5 w-5 ${danger ? "text-destructive" : "text-accent"}`}
         />
         <div>
           <h3
-            className={`font-inter-medium ${danger ? "text-red-300" : "text-purple-100"}`}
+            className={`font-inter-medium ${
+              danger ? "text-destructive" : "text-foreground"
+            }`}
           >
             {title}
           </h3>
-          <p className="text-sm text-purple-300 font-inter-regular">{description}</p>
+          <p className="text-sm text-muted-foreground font-inter-regular">
+            {description}
+          </p>
         </div>
       </div>
       <div className="flex items-center gap-2">{children}</div>
@@ -145,23 +149,24 @@ const Setting = () => {
       className="p-0 h-auto hover:bg-transparent"
     >
       {enabled ? (
-        <ToggleRight className="h-6 w-6 text-green-400" />
+        <ToggleRight className="h-6 w-6 text-success" />
       ) : (
-        <ToggleLeft className="h-6 w-6 text-zinc-500" />
+        <ToggleLeft className="h-6 w-6 text-muted" />
       )}
     </Button>
   );
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full bg-background">
       <Wrapper className="pt-6">
         <Container>
           {/* Header */}
           <div className="flex items-center gap-3 mb-8">
-         
             <div>
-              <h1 className="text-4xl font-inter-bold text-purple-100">Settings </h1>
-              <p className="text-purple-300 font-inter-regular mt-1">
+              <h1 className="text-4xl font-inter-bold text-foreground">
+                Settings{" "}
+              </h1>
+              <p className="text-muted-foreground font-inter-regular mt-1">
                 Manage your account and app preferences
               </p>
             </div>
@@ -170,9 +175,11 @@ const Setting = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Settings Categories Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl sticky top-6">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h2 className="text-xl font-inter-semibold text-purple-100">Categories</h2>
+              <div className="bg-card border border-border rounded-xl sticky top-6">
+                <div className="p-6 border-b border-border">
+                  <h2 className="text-xl font-inter-semibold text-foreground">
+                    Categories
+                  </h2>
                 </div>
                 <div className="p-0">
                   <div className="space-y-1 p-4">
@@ -187,21 +194,21 @@ const Setting = () => {
                     ].map((category, index) => (
                       <div
                         key={index}
-                        className="flex items-center justify-between p-3 hover:bg-purple-950/40 cursor-pointer rounded-lg transition-colors"
+                        className="flex items-center justify-between p-3 hover:bg-muted cursor-pointer rounded-lg transition-colors"
                       >
                         <div className="flex items-center gap-3">
-                          <category.icon className="h-4 w-4 text-purple-400" />
-                          <span className="text-purple-100 text-sm font-inter-medium">
+                          <category.icon className="h-4 w-4 text-primary" />
+                          <span className="text-foreground text-sm font-inter-medium">
                             {category.label}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
                           {category.count > 0 && (
-                            <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50 text-xs">
+                            <Badge className="bg-primary/10 text-primary border-primary/20 text-xs">
                               {category.count}
                             </Badge>
                           )}
-                          <ChevronRight className="h-4 w-4 text-purple-500" />
+                          <ChevronRight className="h-4 w-4 text-accent" />
                         </div>
                       </div>
                     ))}
@@ -213,10 +220,10 @@ const Setting = () => {
             {/* Settings Content */}
             <div className="lg:col-span-2 space-y-6">
               {/* Account Settings */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <User className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <User className="h-5 w-5 text-primary" />
                     Account Settings
                   </h3>
                 </div>
@@ -239,10 +246,10 @@ const Setting = () => {
                         <SelectItem value="public" className="text-purple-100">
                           Public
                         </SelectItem>
-                        <SelectItem value="friends" className="text-purple-100">
+                        <SelectItem value="friends" className="text-foreground">
                           Friends
                         </SelectItem>
-                        <SelectItem value="private" className="text-purple-100">
+                        <SelectItem value="private" className="text-foreground">
                           Private
                         </SelectItem>
                       </SelectContent>
@@ -274,10 +281,10 @@ const Setting = () => {
               </div>
 
               {/* Notification Settings */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Bell className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Bell className="h-5 w-5 text-primary" />
                     Notifications
                   </h3>
                 </div>
@@ -340,10 +347,10 @@ const Setting = () => {
               </div>
 
               {/* Privacy Settings */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-primary" />
                     Privacy & Security
                   </h3>
                 </div>
@@ -378,7 +385,7 @@ const Setting = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-purple-700/50 text-purple-300 hover:bg-purple-950/50 font-inter-medium"
+                      className="border-border text-foreground hover:bg-muted font-inter-medium"
                     >
                       Change
                     </Button>
@@ -387,10 +394,10 @@ const Setting = () => {
               </div>
 
               {/* Appearance Settings */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Palette className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Palette className="h-5 w-5 text-primary" />
                     Appearance
                   </h3>
                 </div>
@@ -406,17 +413,17 @@ const Setting = () => {
                         handleSelectChange("theme", value)
                       }
                     >
-                      <SelectTrigger className="w-24 bg-purple-950/50 border-purple-800/30 text-purple-100">
+                      <SelectTrigger className="w-24 bg-muted border-border text-foreground">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 border-zinc-700">
-                        <SelectItem value="dark" className="text-purple-100">
+                      <SelectContent className="bg-card border-border">
+                        <SelectItem value="dark" className="text-foreground">
                           Dark
                         </SelectItem>
-                        <SelectItem value="light" className="text-purple-100">
+                        <SelectItem value="light" className="text-foreground">
                           Light
                         </SelectItem>
-                        <SelectItem value="auto" className="text-purple-100">
+                        <SelectItem value="auto" className="text-foreground">
                           Auto
                         </SelectItem>
                       </SelectContent>
@@ -434,20 +441,20 @@ const Setting = () => {
                         handleSelectChange("language", value)
                       }
                     >
-                      <SelectTrigger className="w-32 bg-purple-950/50 border-purple-800/30 text-purple-100">
+                      <SelectTrigger className="w-32 bg-muted border-border text-foreground">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 border-zinc-700">
-                        <SelectItem value="english" className="text-purple-100">
+                      <SelectContent className="bg-card border-border">
+                        <SelectItem value="english" className="text-foreground">
                           English
                         </SelectItem>
-                        <SelectItem value="spanish" className="text-purple-100">
+                        <SelectItem value="spanish" className="text-foreground">
                           Spanish
                         </SelectItem>
-                        <SelectItem value="french" className="text-purple-100">
+                        <SelectItem value="french" className="text-foreground">
                           French
                         </SelectItem>
-                        <SelectItem value="hindi" className="text-purple-100">
+                        <SelectItem value="hindi" className="text-foreground">
                           Hindi
                         </SelectItem>
                       </SelectContent>
@@ -465,20 +472,20 @@ const Setting = () => {
                         handleSelectChange("currency", value)
                       }
                     >
-                      <SelectTrigger className="w-20 bg-purple-950/50 border-purple-800/30 text-purple-100">
+                      <SelectTrigger className="w-20 bg-muted border-border text-foreground">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 border-zinc-700">
-                        <SelectItem value="inr" className="text-purple-100">
+                      <SelectContent className="bg-card border-border">
+                        <SelectItem value="inr" className="text-foreground">
                           INR
                         </SelectItem>
-                        <SelectItem value="usd" className="text-purple-100">
+                        <SelectItem value="usd" className="text-foreground">
                           USD
                         </SelectItem>
-                        <SelectItem value="eur" className="text-purple-100">
+                        <SelectItem value="eur" className="text-foreground">
                           EUR
                         </SelectItem>
-                        <SelectItem value="gbp" className="text-purple-100">
+                        <SelectItem value="gbp" className="text-foreground">
                           GBP
                         </SelectItem>
                       </SelectContent>
@@ -499,10 +506,10 @@ const Setting = () => {
               </div>
 
               {/* Data Management */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Database className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Database className="h-5 w-5 text-primary" />
                     Data Management
                   </h3>
                 </div>
@@ -516,7 +523,7 @@ const Setting = () => {
                       variant="outline"
                       size="sm"
                       onClick={handleExportData}
-                      className="border-purple-700/50 text-purple-300 hover:bg-purple-950/50 font-inter-medium"
+                      className="border-border text-foreground hover:bg-muted font-inter-medium"
                     >
                       Export
                     </Button>
@@ -530,7 +537,7 @@ const Setting = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-purple-700/50 text-purple-300 hover:bg-purple-950/50 font-inter-medium"
+                      className="border-border text-foreground hover:bg-muted font-inter-medium"
                     >
                       Import
                     </Button>
@@ -539,10 +546,10 @@ const Setting = () => {
               </div>
 
               {/* Account Actions */}
-              <div className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
-                <div className="p-6 border-b border-zinc-400/20">
-                  <h3 className="text-xl font-inter-semibold text-purple-100 flex items-center gap-2">
-                    <Settings className="h-5 w-5 text-purple-400" />
+              <div className="bg-card border border-border rounded-xl">
+                <div className="p-6 border-b border-border">
+                  <h3 className="text-xl font-inter-semibold text-foreground flex items-center gap-2">
+                    <Settings className="h-5 w-5 text-primary" />
                     Account Actions
                   </h3>
                 </div>
@@ -556,7 +563,7 @@ const Setting = () => {
                       variant="outline"
                       size="sm"
                       onClick={handleLogout}
-                      className="border-purple-700/50 text-purple-300 hover:bg-purple-950/50 font-inter-medium"
+                      className="border-border text-foreground hover:bg-muted font-inter-medium"
                     >
                       Logout
                     </Button>
@@ -572,7 +579,7 @@ const Setting = () => {
                       variant="destructive"
                       size="sm"
                       onClick={handleDeleteAccount}
-                      className="bg-red-600 hover:bg-red-700 text-white font-inter-medium"
+                      className="bg-destructive hover:bg-destructive/80 text-destructive-foreground font-inter-medium"
                     >
                       Delete
                     </Button>

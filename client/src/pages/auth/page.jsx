@@ -38,20 +38,20 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-black relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen w-full bg-zinc-950 relative overflow-hidden flex items-center justify-center">
       {/* Background Gradient */}
       <div
         className="absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(125% 125% at 50% 10%, #000000 40%, #111111 100%)",
+            "radial-gradient(125% 125% at 50% 10%, #09090b 40%, #27272a 100%)",
         }}
       />
 
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-md mx-auto px-6">
         {/* Auth Card */}
-        <div className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-zinc-900/50 backdrop-blur-xl border border-zinc-800/50 rounded-2xl p-8 shadow-2xl">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-inter text-white mb-2">
@@ -90,18 +90,18 @@ const Auth = () => {
             <form onSubmit={handleSubmit} className="space-y-4 opacity-50">
               {/* Email Field */}
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Email
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-400" />
                   <Input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="Enter your email"
-                    className="pl-10 bg-zinc-800/50 border-zinc-700 text-white placeholder-zinc-500 focus:border-white focus:ring-white/20 py-6"
+                    className="pl-10 bg-zinc-800/50 border-zinc-700/50 text-white placeholder-zinc-500 focus:border-purple-500 focus:ring-purple-500/20 py-6"
                     disabled
                   />
                 </div>
@@ -109,24 +109,24 @@ const Auth = () => {
 
               {/* Password Field */}
               <div>
-                <label className="block text-sm font-medium text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-500" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-zinc-400" />
                   <Input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder="Enter your password"
-                    className="pl-10 pr-12 bg-zinc-800/50 border-zinc-700 text-white placeholder-zinc-500 focus:border-white focus:ring-white/20 py-6"
+                    className="pl-10 pr-12 bg-zinc-800/50 border-zinc-700/50 text-white placeholder-zinc-500 focus:border-purple-500 focus:ring-purple-500/20 py-6"
                     disabled
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-white"
                     disabled
                   >
                     {showPassword ? (
@@ -141,7 +141,7 @@ const Auth = () => {
               {/* Submit Button - Disabled */}
               <Button
                 type="submit"
-                className="w-full bg-zinc-600 text-zinc-400 py-6 mt-6 cursor-not-allowed"
+                className="w-full bg-zinc-800 text-zinc-500 py-6 mt-6 cursor-not-allowed"
                 disabled
               >
                 Email Login (Coming Soon)

@@ -93,7 +93,7 @@ const Board = () => {
     icon: Icon,
   }) => (
     <div>
-      <label className="block text-sm font-medium text-zinc-300 mb-3">
+      <label className="block text-sm font-medium text-foreground mb-3">
         {label}
       </label>
       <div className="grid grid-cols-2 gap-3">
@@ -104,8 +104,8 @@ const Board = () => {
             onClick={() => handleMultiSelect(field, option)}
             className={`p-3 rounded-lg border transition-colors text-sm ${
               formData[field].includes(option)
-                ? "bg-white text-black border-white"
-                : "bg-zinc-800/50 border-zinc-700 text-zinc-300 hover:border-zinc-600"
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-card border-border text-foreground hover:border-accent"
             }`}
           >
             <div className="flex items-center gap-2">

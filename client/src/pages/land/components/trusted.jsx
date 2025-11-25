@@ -46,7 +46,7 @@ export default function TrustedBy() {
         {avatars.map((avatar, index) => (
           <Avatar
             key={index}
-            className="border-2 border-white w-7 h-7 sm:w-8 sm:h-8 shadow-sm hover:scale-105 transition-transform hover:z-10 relative"
+            className="border-2 border-zinc-700 w-7 h-7 sm:w-8 sm:h-8 shadow-lg hover:scale-105 transition-transform hover:z-10 relative ring-1 ring-zinc-600/20"
           >
             <AvatarImage
               src={avatar.src}
@@ -54,7 +54,7 @@ export default function TrustedBy() {
               loading="lazy"
               className="object-cover"
             />
-            <AvatarFallback className="text-xs font-medium bg-blue-100 text-blue-600">
+            <AvatarFallback className="text-xs font-medium bg-gradient-to-br from-blue-500 to-teal-400 text-white">
               {avatar.fallback}
             </AvatarFallback>
           </Avatar>
@@ -64,7 +64,9 @@ export default function TrustedBy() {
       {/* Text */}
       <p className="text-xs sm:text-sm text-gray-200 font-medium text-center sm:text-left">
         Trusted by{" "}
-        <span className="font-semibold text-gray-400">1000+ Travlers</span>
+        <span className="font-semibold bg-gradient-to-r from-teal-400 to-blue-400 text-transparent bg-clip-text">
+          1000+ Travelers
+        </span>
       </p>
     </div>
   );

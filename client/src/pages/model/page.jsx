@@ -70,30 +70,37 @@ export default function MonumentsDashboard() {
     if (monument.vrHTMLPath) {
       // Construct the VR URL using the path stored in database
       const vrUrl = `/VR/${monument.vrHTMLPath}`;
-      
+
       // Open VR experience in new window with VR-optimized settings
       const vrWindow = window.open(
-        vrUrl, 
-        'vrExperience',
-        'width=1400,height=900,fullscreen=yes,toolbar=no,menubar=no,scrollbars=no,location=no,status=no'
+        vrUrl,
+        "vrExperience",
+        "width=1400,height=900,fullscreen=yes,toolbar=no,menubar=no,scrollbars=no,location=no,status=no"
       );
-      
+
       // Focus the VR window and attempt fullscreen
       if (vrWindow) {
         vrWindow.focus();
-        
+
         // Try to trigger fullscreen after a short delay
         setTimeout(() => {
-          if (vrWindow.document && vrWindow.document.documentElement.requestFullscreen) {
-            vrWindow.document.documentElement.requestFullscreen().catch(err => {
-              console.log('Fullscreen request failed:', err);
-            });
+          if (
+            vrWindow.document &&
+            vrWindow.document.documentElement.requestFullscreen
+          ) {
+            vrWindow.document.documentElement
+              .requestFullscreen()
+              .catch((err) => {
+                console.log("Fullscreen request failed:", err);
+              });
           }
         }, 1000);
       }
     } else {
       // Show a more informative message for unavailable VR
-      alert(`🥽 VR experience for ${monument.name} is coming soon! We're working on creating an immersive virtual tour for this magnificent monument.`);
+      alert(
+        `🥽 VR experience for ${monument.name} is coming soon! We're working on creating an immersive virtual tour for this magnificent monument.`
+      );
     }
   };
 
@@ -143,41 +150,44 @@ export default function MonumentsDashboard() {
   });
 
   // Count VR-enabled monuments
-  const vrEnabledCount = models.filter(model => model.vrHTMLPath).length;
+  const vrEnabledCount = models.filter((model) => model.vrHTMLPath).length;
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-black">
+      <div className="flex items-center justify-center min-h-screen bg-background">
         <div className="flex items-center space-x-3">
-          <Spinner className="text-purple-400" />
-          <span className="text-purple-100 font-inter-medium">Loading monuments...</span>
+          <Spinner className="text-primary" />
+          <span className="text-foreground font-inter-medium">
+            Loading monuments...
+          </span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full bg-background">
       <Wrapper className="pt-6">
         <Container>
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-4xl font-inter-bold text-purple-100 mb-2">
+              <h1 className="text-4xl font-inter-bold text-foreground mb-2">
                 Monuments of India
               </h1>
-              <p className="text-purple-300 font-inter-regular">
-                Explore India's heritage through immersive 3D, AR, and VR experiences
+              <p className="text-muted-foreground font-inter-regular">
+                Explore India's heritage through immersive 3D, AR, and VR
+                experiences
               </p>
             </div>
-            
+
             {/* Stats Badges */}
             <div className="flex items-center gap-2">
-              <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50">
+              <Badge className="bg-primary/10 text-primary border-primary/20">
                 <Building className="h-3 w-3 mr-1" />
                 {models.length} Monuments
               </Badge>
-              <Badge className="bg-pink-900/50 text-pink-300 border-pink-700/50">
+              <Badge className="bg-secondary/10 text-secondary border-secondary/20">
                 <MonitorSpeaker className="h-3 w-3 mr-1" />
                 {vrEnabledCount} VR Ready
               </Badge>
@@ -185,16 +195,16 @@ export default function MonumentsDashboard() {
           </div>
 
           {/* Search and Filters */}
-          <div className="mb-8 p-6 bg-zinc-700/30 border border-zinc-400/30 rounded-xl">
+          <div className="mb-8 p-6 bg-card border border-border rounded-xl">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {/* Search Bar */}
               <div className="relative w-full">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
                   placeholder="Search monuments..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-full bg-purple-950/50 border-purple-800/30 text-purple-100 placeholder:text-purple-400 focus:border-purple-600"
+                  className="pl-10 w-full bg-background border-input text-foreground placeholder:text-muted-foreground focus:border-primary"
                 />
               </div>
 
@@ -204,21 +214,21 @@ export default function MonumentsDashboard() {
                   value={selectedLocation}
                   onValueChange={setSelectedLocation}
                 >
-                  <SelectTrigger className="w-full bg-purple-950/50 border-purple-800/30 text-purple-100">
+                  <SelectTrigger className="w-full bg-background border-input text-foreground">
                     <SelectValue
                       placeholder="Select Location"
                       className="truncate"
                     />
                   </SelectTrigger>
-                  <SelectContent className="bg-zinc-900 border-zinc-700 w-full">
-                    <SelectItem value="all" className="text-purple-100">
+                  <SelectContent className="bg-card border-border w-full">
+                    <SelectItem value="all" className="text-foreground">
                       All Locations
                     </SelectItem>
                     {locations.map((location) => (
                       <SelectItem
                         key={location}
                         value={location}
-                        className="text-purple-100"
+                        className="text-foreground"
                         title={location}
                       >
                         <span className="truncate">{location}</span>
@@ -234,21 +244,21 @@ export default function MonumentsDashboard() {
                   value={selectedArchitecture}
                   onValueChange={setSelectedArchitecture}
                 >
-                  <SelectTrigger className="w-full bg-purple-950/50 border-purple-800/30 text-purple-100">
+                  <SelectTrigger className="w-full bg-background border-input text-foreground">
                     <SelectValue
                       placeholder="Architecture Style"
                       className="truncate"
                     />
                   </SelectTrigger>
-                  <SelectContent className="bg-zinc-900 border-zinc-700 w-full">
-                    <SelectItem value="all" className="text-purple-100">
+                  <SelectContent className="bg-card border-border w-full">
+                    <SelectItem value="all" className="text-foreground">
                       All Styles
                     </SelectItem>
                     {architectures.map((arch) => (
                       <SelectItem
                         key={arch}
                         value={arch}
-                        className="text-purple-100"
+                        className="text-foreground"
                         title={arch}
                       >
                         <span className="truncate">{arch}</span>
@@ -264,21 +274,21 @@ export default function MonumentsDashboard() {
                   value={selectedPeriod}
                   onValueChange={setSelectedPeriod}
                 >
-                  <SelectTrigger className="w-full bg-purple-950/50 border-purple-800/30 text-purple-100">
+                  <SelectTrigger className="w-full bg-background border-input text-foreground">
                     <SelectValue
                       placeholder="Time Period"
                       className="truncate"
                     />
                   </SelectTrigger>
-                  <SelectContent className="bg-zinc-900 border-zinc-700 w-full">
-                    <SelectItem value="all" className="text-purple-100">
+                  <SelectContent className="bg-card border-border w-full">
+                    <SelectItem value="all" className="text-foreground">
                       All Periods
                     </SelectItem>
                     {periods.map((period) => (
                       <SelectItem
                         key={period}
                         value={period}
-                        className="text-purple-100"
+                        className="text-foreground"
                         title={period}
                       >
                         <span className="truncate">{period}</span>
@@ -291,10 +301,10 @@ export default function MonumentsDashboard() {
 
             {/* Results count */}
             <div className="mt-4 flex justify-between items-center">
-              <span className="text-purple-300 text-sm">
+              <span className="text-muted-foreground text-sm">
                 Showing {filteredModels.length} of {models.length} monuments
               </span>
-              
+
               {/* Clear Filters Button */}
               <Button
                 onClick={() => {
@@ -305,7 +315,7 @@ export default function MonumentsDashboard() {
                 }}
                 variant="outline"
                 size="sm"
-                className="border-purple-700/50 text-purple-300 hover:bg-purple-950/30"
+                className="border-border text-muted-foreground hover:bg-accent/10"
               >
                 <Filter className="h-4 w-4 mr-2" />
                 Clear Filters
@@ -318,25 +328,25 @@ export default function MonumentsDashboard() {
             {filteredModels.map((monument) => (
               <div
                 key={monument._id}
-                className="bg-zinc-700/30 border border-zinc-400/30 rounded-xl p-4 hover:bg-purple-950/40 transition-all duration-300 group"
+                className="bg-card border border-border rounded-xl p-4 hover:bg-card/80 transition-all duration-300 group shadow-sm"
               >
                 {/* Monument Image with VR Badge */}
-                <div className="relative w-full h-48 bg-purple-900/50 rounded-lg mb-4 overflow-hidden">
+                <div className="relative w-full h-48 bg-muted rounded-lg mb-4 overflow-hidden">
                   <img
                     src={monument.imageUrl}
                     alt={monument.name}
                     className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                   />
-                  
+
                   {/* VR Status Badge */}
                   <div className="absolute top-3 right-3">
                     {monument.vrHTMLPath ? (
-                      <Badge className="bg-pink-900/90 text-pink-200 border-pink-700/50 backdrop-blur-sm">
+                      <Badge className="bg-success/20 text-success border-success/30 backdrop-blur-sm">
                         <MonitorSpeaker className="h-3 w-3 mr-1" />
                         VR Ready
                       </Badge>
                     ) : (
-                      <Badge className="bg-zinc-800/90 text-zinc-400 border-zinc-600/50 backdrop-blur-sm">
+                      <Badge className="bg-muted/90 text-muted-foreground border-border backdrop-blur-sm">
                         VR Soon
                       </Badge>
                     )}
@@ -347,15 +357,15 @@ export default function MonumentsDashboard() {
                 <div className="space-y-3">
                   <div>
                     <h3
-                      className="text-lg font-inter-semibold text-purple-100 mb-1 truncate group-hover:text-purple-50 transition-colors"
+                      className="text-lg font-inter-semibold text-foreground mb-1 truncate group-hover:text-primary transition-colors"
                       title={monument.name}
                     >
                       {monument.name}
                     </h3>
                     <div className="flex items-center gap-1 mb-2">
-                      <MapPin className="h-3 w-3 text-purple-400 shrink-0" />
+                      <MapPin className="h-3 w-3 text-accent shrink-0" />
                       <span
-                        className="text-purple-300 font-inter-regular text-sm truncate"
+                        className="text-muted-foreground font-inter-regular text-sm truncate"
                         title={monument.location}
                       >
                         {monument.location}
@@ -363,18 +373,18 @@ export default function MonumentsDashboard() {
                     </div>
                   </div>
 
-                  <p className="text-purple-300 font-inter-regular text-sm leading-relaxed line-clamp-3">
+                  <p className="text-muted-foreground font-inter-regular text-sm leading-relaxed line-clamp-3">
                     {monument.description}
                   </p>
 
                   {/* Badges */}
                   <div className="flex flex-wrap gap-2">
-                    <Badge className="bg-blue-900/50 text-blue-300 border-blue-700/50 shrink-0">
+                    <Badge className="bg-accent/20 text-accent border-accent/30 shrink-0">
                       <Calendar className="h-3 w-3 mr-1" />
                       {monument.yearBuilt}
                     </Badge>
                     <Badge
-                      className="bg-purple-900/50 text-purple-300 border-purple-700/50 truncate max-w-[120px]"
+                      className="bg-secondary/20 text-secondary-foreground border-secondary/30 truncate max-w-[120px]"
                       title={monument.architecture}
                     >
                       {monument.architecture}
@@ -386,7 +396,7 @@ export default function MonumentsDashboard() {
                     {/* 3D Model Button - Full Width */}
                     <Button
                       onClick={() => handleArViewClick(monument.sketchfabUid)}
-                      className="w-full bg-purple-900/50 border border-purple-700/50 text-purple-300 hover:bg-purple-800/50 transition-all duration-200 font-inter-medium text-sm"
+                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 font-inter-medium text-sm"
                     >
                       <Box className="h-3 w-3 mr-2" />
                       3D Model
@@ -396,19 +406,19 @@ export default function MonumentsDashboard() {
                     <div className="grid grid-cols-2 gap-2">
                       <Button
                         onClick={() => handleArLinkClick(monument.arlink)}
-                        className="bg-blue-900/50 border border-blue-700/50 text-blue-300 hover:bg-blue-800/50 transition-all duration-200 font-inter-medium text-sm"
+                        className="bg-accent/20 border border-accent/30 text-accent hover:bg-accent/30 transition-all duration-200 font-inter-medium text-sm"
                       >
                         <Eye className="h-3 w-3 mr-1" />
                         AR View
                       </Button>
-                      
+
                       <Button
                         onClick={() => handleVrViewClick(monument)}
                         disabled={!monument.vrHTMLPath}
                         className={`transition-all duration-200 font-inter-medium text-sm ${
                           monument.vrHTMLPath
-                            ? 'bg-pink-900/50 border border-pink-700/50 text-pink-300 hover:bg-pink-800/50 hover:scale-105'
-                            : 'bg-zinc-800/50 border border-zinc-600/50 text-zinc-500 cursor-not-allowed'
+                            ? "bg-success/20 border border-success/30 text-success hover:bg-success/30 hover:scale-105"
+                            : "bg-muted border border-border text-muted-foreground cursor-not-allowed"
                         }`}
                       >
                         <MonitorSpeaker className="h-3 w-3 mr-1" />
@@ -418,7 +428,7 @@ export default function MonumentsDashboard() {
                             <ExternalLink className="h-2 w-2 ml-1" />
                           </>
                         ) : (
-                          'VR Soon'
+                          "VR Soon"
                         )}
                       </Button>
                     </div>
@@ -431,34 +441,36 @@ export default function MonumentsDashboard() {
           {/* No results message */}
           {filteredModels.length === 0 && (
             <div className="text-center py-12">
-              <div className="w-16 h-16 bg-purple-900/50 rounded-xl flex items-center justify-center mx-auto mb-4">
-                <Search className="h-8 w-8 text-purple-300" />
+              <div className="w-16 h-16 bg-muted rounded-xl flex items-center justify-center mx-auto mb-4">
+                <Search className="h-8 w-8 text-muted-foreground" />
               </div>
-              <h3 className="text-xl font-inter-semibold text-purple-100 mb-2">
+              <h3 className="text-xl font-inter-semibold text-foreground mb-2">
                 No monuments found
               </h3>
-              <p className="text-purple-300 font-inter-regular">
-                Try adjusting your search criteria or clear filters to see all monuments
+              <p className="text-muted-foreground font-inter-regular">
+                Try adjusting your search criteria or clear filters to see all
+                monuments
               </p>
             </div>
           )}
 
           {/* Bottom CTA */}
-          <div className="mt-12 p-6 bg-gradient-to-r from-purple-950/50 via-purple-900/30 to-purple-950/50 border border-purple-800/30 rounded-xl text-center">
-            <h3 className="text-xl font-inter-semibold text-purple-100 mb-2">
+          <div className="mt-12 p-6 bg-gradient-to-r from-card/50 via-accent/10 to-card/50 border border-border rounded-xl text-center">
+            <h3 className="text-xl font-inter-semibold text-foreground mb-2">
               Experience Heritage in Virtual Reality
             </h3>
-            <p className="text-purple-300 font-inter-regular mb-4">
-              Step into history with our immersive VR experiences. {vrEnabledCount} monuments now available in virtual reality!
+            <p className="text-muted-foreground font-inter-regular mb-4">
+              Step into history with our immersive VR experiences.{" "}
+              {vrEnabledCount} monuments now available in virtual reality!
             </p>
             <div className="flex justify-center gap-2">
-              <Badge className="bg-pink-900/50 text-pink-300 border-pink-700/50">
+              <Badge className="bg-success/20 text-success border-success/30">
                 🥽 VR Compatible
               </Badge>
-              <Badge className="bg-blue-900/50 text-blue-300 border-blue-700/50">
+              <Badge className="bg-accent/20 text-accent border-accent/30">
                 📱 Mobile Friendly
               </Badge>
-              <Badge className="bg-purple-900/50 text-purple-300 border-purple-700/50">
+              <Badge className="bg-primary/20 text-primary border-primary/30">
                 🎮 Interactive Tours
               </Badge>
             </div>
@@ -468,9 +480,9 @@ export default function MonumentsDashboard() {
 
       {/* 3D Model Modal */}
       <Dialog open={isArModalOpen} onOpenChange={setIsArModalOpen}>
-        <DialogContent className="sm:max-w-screen w-screen h-screen bg-black border-purple-700/50 p-0 m-0">
-          <DialogHeader className="p-4 bg-purple-950/90 backdrop-blur border-b border-purple-800/30">
-            <DialogTitle className="text-purple-100 font-inter-semibold">
+        <DialogContent className="sm:max-w-screen w-screen h-screen bg-background border-border p-0 m-0">
+          <DialogHeader className="p-4 bg-card/90 backdrop-blur border-b border-border">
+            <DialogTitle className="text-foreground font-inter-semibold">
               3D Model Viewer{" "}
               {selectedModelUid ? `- Interactive Experience` : ""}
             </DialogTitle>

@@ -9,6 +9,7 @@ import Trips from "./pages/trips/page";
 import TripDetail from "./pages/trips/routes/page";
 import Profile from "./pages/profile/page";
 import Setting from "./pages/settings/page";
+import SharePage from "./pages/share/page";
 import NotFound from "./pages/404/page";
 
 // stores
@@ -25,6 +26,7 @@ import {
 import Layout from "./components/layout/layout";
 
 import { Spinner } from "./components/ui/spinner";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 const App = () => {
   const { checkAuth, checkingAuth } = useAuthStore();
@@ -40,89 +42,95 @@ const App = () => {
     );
   }
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <PublicRoute>
-            <Land />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/auth"
-        element={
-          <PublicRoute>
-            <Auth />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/on-board"
-        element={
-          <OnboardingRoute>
-            <Board />
-          </OnboardingRoute>
-        }
-      />
-      <Route
-        element={
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
-        }
-      >
+    <ThemeProvider>
+      <Routes>
         <Route
-          path="/home"
+          path="/"
           element={
-            <OnboardGuard>
-              <Home />
-            </OnboardGuard>
+            <PublicRoute>
+              <Land />
+            </PublicRoute>
           }
         />
         <Route
-          path="/3d-models"
+          path="/auth"
           element={
-            <OnboardGuard>
-              <Models />
-            </OnboardGuard>
+            <PublicRoute>
+              <Auth />
+            </PublicRoute>
           }
         />
         <Route
-          path="/my-trips"
+          path="/share/:tripId"
+          element={<SharePage />}
+        />
+        <Route
+          path="/on-board"
           element={
-            <OnboardGuard>
-              <Trips />
-            </OnboardGuard>
+            <OnboardingRoute>
+              <Board />
+            </OnboardingRoute>
           }
         />
         <Route
-          path="/profile"
           element={
-            <OnboardGuard>
-              <Profile />
-            </OnboardGuard>
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
           }
-        />
-        <Route
-          path="/settings"
-          element={
-            <OnboardGuard>
-              <Setting />
-            </OnboardGuard>
-          }
-        />
-        <Route
-          path="/my-trips/:tripId"
-          element={
-            <OnboardGuard>
-              <TripDetail />
-            </OnboardGuard>
-          }
-        />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        >
+          <Route
+            path="/home"
+            element={
+              <OnboardGuard>
+                <Home />
+              </OnboardGuard>
+            }
+          />
+          <Route
+            path="/3d-models"
+            element={
+              <OnboardGuard>
+                <Models />
+              </OnboardGuard>
+            }
+          />
+          <Route
+            path="/my-trips"
+            element={
+              <OnboardGuard>
+                <Trips />
+              </OnboardGuard>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <OnboardGuard>
+                <Profile />
+              </OnboardGuard>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <OnboardGuard>
+                <Setting />
+              </OnboardGuard>
+            }
+          />
+          <Route
+            path="/my-trips/:tripId"
+            element={
+              <OnboardGuard>
+                <TripDetail />
+              </OnboardGuard>
+            }
+          />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </ThemeProvider>
   );
 };
 export default App;
